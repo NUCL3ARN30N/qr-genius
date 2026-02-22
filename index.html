@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+    <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css">
     <style>
 :root{--bg:#08080a;--bg2:#111114;--card:#16161b;--inp:#1e1e25;--hov:#26262e;--brd:#2a2a33;--t1:#f0eff4;--t2:#9896a3;--t3:#6b6878;--ac:#6c5ce7;--acl:#a29bfe;--acg:rgba(108,92,231,.12);--ac2:#fd79a8;--ok:#00b894;--r1:8px;--r2:12px;--r3:16px;--sh:0 8px 48px rgba(0,0,0,.4);--tr:.2s cubic-bezier(.4,0,.2,1)}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -63,6 +65,26 @@ select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%
 .ur-btn:hover:not(:disabled){background:var(--hov);border-color:var(--t3);color:var(--t1)}
 .ur-btn:disabled{opacity:.3;cursor:not-allowed}
 .ur-btn i{font-size:13px}
+.icon-src-tabs{display:flex;gap:3px;padding:3px;background:var(--bg2);border-radius:var(--r1);margin-bottom:14px}
+.icon-src-tab{flex:1;padding:7px 6px;border:none;background:0;color:var(--t3);font-family:inherit;font-size:11px;font-weight:500;border-radius:6px;cursor:pointer;transition:all var(--tr);text-align:center;white-space:nowrap}
+.icon-src-tab:hover{color:var(--t2);background:var(--hov)}
+.icon-src-tab.on{background:var(--ac);color:#fff}
+.icon-src-content{display:none}.icon-src-content.on{display:block}
+.cust-icon-row{display:flex;gap:8px;align-items:start}
+.cust-icon-input{flex:1}
+.cust-icon-input input{font-family:'JetBrains Mono',monospace!important;font-size:12.5px!important}
+.cust-icon-preview{width:48px;height:48px;background:var(--inp);border:2px solid var(--brd);border-radius:var(--r1);display:grid;place-items:center;font-size:22px;color:var(--t2);flex-shrink:0;transition:all var(--tr);overflow:hidden}
+.cust-icon-preview.ok{border-color:var(--ok);color:var(--t1)}
+.cust-icon-preview img{width:28px;height:28px;object-fit:contain}
+.icon-src-hint{font-size:11px;color:var(--t3);margin-top:6px;line-height:1.5}
+.icon-src-hint a{color:var(--acl);text-decoration:none}
+.icon-src-hint a:hover{text-decoration:underline}
+.icon-src-hint code{font-family:'JetBrains Mono',monospace;font-size:10.5px;background:var(--bg);padding:1px 5px;border-radius:3px;color:var(--acl)}
+.cust-color-row{display:flex;gap:8px;margin-top:10px;align-items:center}
+.cust-color-row label{font-size:11.5px;color:var(--t3);margin:0;white-space:nowrap}
+.cust-color-row .cpw{padding:5px 8px}
+.cust-color-row .cpw input[type="color"]{width:24px;height:24px}
+.cust-color-row .hex-in{width:62px!important;padding:3px 5px!important;font-size:11px!important}
 .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .so{padding:12px 8px;background:var(--inp);border:2px solid var(--brd);border-radius:var(--r1);cursor:pointer;text-align:center;transition:all var(--tr);font-size:11.5px;font-weight:500;color:var(--t2)}
 .so:hover{border-color:var(--t3);color:var(--t1)}
@@ -185,7 +207,16 @@ footer a{color:var(--acl);text-decoration:none}footer a:hover{text-decoration:un
             <div class="fg" style="margin-top:12px"><label>Margin: <strong id="ml">10</strong></label><input type="range" id="qm" min="0" max="50" value="10" step="1"><div class="rl"><span>0</span><span>50</span></div></div>
             <div class="sd"></div>
             <div class="st"><i class="fas fa-image"></i> Center Icon / Image</div>
-            <div class="fg"><label>Preset Icons</label>
+            <div class="icon-src-tabs" id="isrc-tabs">
+                <button class="icon-src-tab on" data-src="presets">Presets</button>
+                <button class="icon-src-tab" data-src="fontawesome">FA</button>
+                <button class="icon-src-tab" data-src="remix">Remix</button>
+                <button class="icon-src-tab" data-src="nerd">Nerd</button>
+                <button class="icon-src-tab" data-src="simple">Simple</button>
+                <button class="icon-src-tab" data-src="upload">Upload</button>
+            </div>
+
+            <div class="icon-src-content on" id="isrc-presets">
                 <div class="ig" id="icg">
                     <div class="io on" data-icon="none" title="None"><i class="fas fa-ban"></i></div>
                     <div class="io" data-icon="globe"><i class="fas fa-globe"></i></div>
@@ -204,7 +235,46 @@ footer a{color:var(--acl);text-decoration:none}footer a:hover{text-decoration:un
                     <div class="io" data-icon="bolt"><i class="fas fa-bolt"></i></div>
                 </div>
             </div>
-            <div class="fg" style="margin-top:14px"><label>Or upload custom image</label><div class="ua" id="ua"><i class="fas fa-cloud-upload-alt"></i><span id="ul">Click or drag to upload (PNG, JPG, SVG)</span><input type="file" id="ui" accept="image/*" hidden></div></div>
+
+            <div class="icon-src-content" id="isrc-fontawesome">
+                <div class="cust-icon-row">
+                    <div class="cust-icon-input"><div class="fg"><label>FontAwesome Icon Class</label><input type="text" id="fa-class" placeholder="fa-solid fa-rocket" spellcheck="false"></div></div>
+                    <div class="cust-icon-preview" id="fa-prev"><i class="fas fa-icons"></i></div>
+                </div>
+                <div class="icon-src-hint">Browse icons at <a href="https://fontawesome.com/icons" target="_blank">fontawesome.com</a><br>Format: <code>fa-solid fa-name</code> or <code>fa-brands fa-name</code></div>
+                <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="fa-color" value="#000000"><input type="text" class="hex-in" id="fa-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+            </div>
+
+            <div class="icon-src-content" id="isrc-remix">
+                <div class="cust-icon-row">
+                    <div class="cust-icon-input"><div class="fg"><label>Remix Icon Class</label><input type="text" id="ri-class" placeholder="ri-rocket-line" spellcheck="false"></div></div>
+                    <div class="cust-icon-preview" id="ri-prev"><i class="ri-apps-line"></i></div>
+                </div>
+                <div class="icon-src-hint">Browse icons at <a href="https://remixicon.com" target="_blank">remixicon.com</a> (v4.6)<br>Format: <code>ri-icon-name</code> (e.g. <code>ri-wifi-line</code>)</div>
+                <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="ri-color" value="#000000"><input type="text" class="hex-in" id="ri-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+            </div>
+
+            <div class="icon-src-content" id="isrc-nerd">
+                <div class="cust-icon-row">
+                    <div class="cust-icon-input"><div class="fg"><label>Nerd Font Icon Class</label><input type="text" id="nf-class" placeholder="nf-fa-linux" spellcheck="false"></div></div>
+                    <div class="cust-icon-preview" id="nf-prev"><i class="nf nf-fa-terminal"></i></div>
+                </div>
+                <div class="icon-src-hint">Browse icons at <a href="https://www.nerdfonts.com/cheat-sheet" target="_blank">nerdfonts.com/cheat-sheet</a><br>Format: <code>nf-setname-iconname</code> (e.g. <code>nf-fa-linux</code>)</div>
+                <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="nf-color" value="#000000"><input type="text" class="hex-in" id="nf-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+            </div>
+
+            <div class="icon-src-content" id="isrc-simple">
+                <div class="cust-icon-row">
+                    <div class="cust-icon-input"><div class="fg"><label>Simple Icons Slug</label><input type="text" id="si-class" placeholder="github" spellcheck="false"></div></div>
+                    <div class="cust-icon-preview" id="si-prev"><i class="fas fa-cube"></i></div>
+                </div>
+                <div class="icon-src-hint">Browse icons at <a href="https://icones.js.org/collection/simple-icons" target="_blank">icones.js.org</a> or <a href="https://simpleicons.org" target="_blank">simpleicons.org</a><br>Format: slug name (e.g. <code>github</code>, <code>discord</code>, <code>python</code>)</div>
+                <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="si-color" value="#000000"><input type="text" class="hex-in" id="si-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+            </div>
+
+            <div class="icon-src-content" id="isrc-upload">
+                <div class="ua" id="ua"><i class="fas fa-cloud-upload-alt"></i><span id="ul">Click or drag to upload (PNG, JPG, SVG)</span><input type="file" id="ui" accept="image/*" hidden></div>
+            </div>
             <div class="fg"><label>Icon Size: <strong id="isl">0.4</strong></label><input type="range" id="is" min="0.1" max="1.0" value="0.4" step="0.05"><div class="rl"><span>Small</span><span>Large</span></div></div>
             <div class="tr"><span>Hide dots behind icon</span><div class="tg on" id="ihd" data-active="true"></div></div>
         </div>
@@ -296,7 +366,7 @@ function gen(){
     cc=document.getElementById('cc').value,cd=document.getElementById('ccd').value,
     ir=+document.getElementById('is').value,hd=document.getElementById('ihd').dataset.active==='true',
     img=null;
-    if(custImg)img=custImg;else if(selIc!=='none')img=mkIcon(selIc,200);
+    if(custImg)img=custImg;else if(custIconData)img=custIconData;else if(selIc!=='none')img=mkIcon(selIc,200);
     var c={width:sz,height:sz,margin:mg,data:data,
         dotsOptions:{color:fg,type:dSty},
         backgroundOptions:{color:bg},
@@ -326,11 +396,129 @@ function setupSG(id,fn){document.querySelectorAll('#'+id+' .so').forEach(functio
     o.classList.add('on');fn(o.dataset.style);sched()}})}
 setupSG('dsg',function(v){dSty=v});setupSG('csg',function(v){cSty=v});setupSG('cdsg',function(v){cdSty=v});
 
+// ===================== ICON SOURCE TABS =====================
+var curIconSrc='presets',custIconData=null;
+document.querySelectorAll('#isrc-tabs .icon-src-tab').forEach(function(t){t.onclick=function(){
+    document.querySelectorAll('#isrc-tabs .icon-src-tab').forEach(function(x){x.classList.remove('on')});
+    t.classList.add('on');curIconSrc=t.dataset.src;
+    document.querySelectorAll('.icon-src-content').forEach(function(x){x.classList.remove('on')});
+    document.getElementById('isrc-'+curIconSrc).classList.add('on');
+    // when switching to presets with "none" selected, clear custom
+    if(curIconSrc==='presets'&&selIc==='none'){custIconData=null;custImg=null;sched()}
+}});
+
 document.querySelectorAll('#icg .io').forEach(function(o){o.onclick=function(){
     document.querySelectorAll('#icg .io').forEach(function(x){x.classList.remove('on')});
     o.classList.add('on');selIc=o.dataset.icon;
-    if(selIc!=='none'){custImg=null;document.getElementById('ua').classList.remove('has');document.getElementById('ul').textContent='Click or drag to upload (PNG, JPG, SVG)'}
+    custImg=null;custIconData=null;
+    document.getElementById('ua').classList.remove('has');document.getElementById('ul').textContent='Click or drag to upload (PNG, JPG, SVG)';
     sched()}});
+
+// ===================== RENDER CSS ICON TO DATA URL =====================
+function renderIconToDataURL(iconClass,color,cb){
+    var canvas=document.createElement('canvas');canvas.width=400;canvas.height=400;
+    var ctx=canvas.getContext('2d');
+    // white background with rounded corners
+    ctx.fillStyle='#ffffff';
+    ctx.beginPath();ctx.roundRect(0,0,400,400,24);ctx.fill();
+    // render icon offscreen
+    var tmp=document.createElement('div');
+    tmp.style.cssText='position:fixed;left:-9999px;top:-9999px;width:400px;height:400px;display:flex;align-items:center;justify-content:center;font-size:240px;color:'+(color||'#000000')+';line-height:1;';
+    var ic=document.createElement('i');
+    iconClass.trim().split(/\s+/).forEach(function(c){ic.classList.add(c)});
+    tmp.appendChild(ic);document.body.appendChild(tmp);
+    // wait for font to render
+    setTimeout(function(){
+        var rect=ic.getBoundingClientRect();
+        // use html2canvas approach via foreignObject
+        var svgStr='<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><foreignObject width="400" height="400"><div xmlns="http://www.w3.org/1999/xhtml" style="width:400px;height:400px;display:flex;align-items:center;justify-content:center;font-size:240px;color:'+(color||'#000')+';line-height:1;background:#fff;border-radius:24px;">'+tmp.innerHTML+'</div></foreignObject></svg>';
+        // This won't work due to CORS on fonts, so use canvas text fallback
+        // Instead, get computed content and draw it
+        var cs=getComputedStyle(ic,':before');
+        var charCode=cs.content;
+        if(charCode&&charCode!=='none'&&charCode!=='normal'){
+            charCode=charCode.replace(/['"]/g,'');
+            var ff=getComputedStyle(ic).fontFamily;
+            var fw=getComputedStyle(ic).fontWeight;
+            ctx.font=fw+' 240px '+ff;
+            ctx.fillStyle=color||'#000000';
+            ctx.textAlign='center';ctx.textBaseline='middle';
+            ctx.fillText(charCode,200,210);
+        }
+        document.body.removeChild(tmp);
+        cb(canvas.toDataURL('image/png'));
+    },150);
+}
+
+// ===================== SIMPLE ICONS FETCHER =====================
+var siCache={};
+function fetchSimpleIcon(slug,color,cb){
+    slug=slug.toLowerCase().trim().replace(/\s+/g,'');
+    if(siCache[slug]){
+        var svg=siCache[slug].replace(/<svg /,'<svg fill="'+(color||'#000')+'" ');
+        var wrapped='<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect width="400" height="400" rx="24" fill="white"/><g transform="translate(70,70) scale(10.833)">'+svg.replace(/<svg[^>]*>/,'').replace(/<\/svg>/,'')+'</g></svg>';
+        cb('data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(wrapped))));
+        return;
+    }
+    fetch('https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/'+slug+'.svg')
+    .then(function(r){if(!r.ok)throw new Error('Not found');return r.text()})
+    .then(function(svg){
+        siCache[slug]=svg;
+        svg=svg.replace(/<svg /,'<svg fill="'+(color||'#000')+'" ');
+        var wrapped='<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect width="400" height="400" rx="24" fill="white"/><g transform="translate(70,70) scale(10.833)">'+svg.replace(/<svg[^>]*>/,'').replace(/<\/svg>/,'')+'</g></svg>';
+        cb('data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(wrapped))));
+    })
+    .catch(function(){cb(null)});
+}
+
+// ===================== CUSTOM ICON INPUT HANDLERS =====================
+function setupCustomIcon(prefix,prevId){
+    var inp=document.getElementById(prefix+'-class');
+    var prev=document.getElementById(prefix+'-prev');
+    var cpick=document.getElementById(prefix+'-color');
+    var chex=document.getElementById(prefix+'-colorh');
+    if(cpick&&chex){
+        cpick.oninput=function(){chex.value=cpick.value;triggerCustom()};
+        chex.oninput=function(){var v=chex.value;if(v.charAt(0)!=='#')v='#'+v;if(/^#[0-9a-fA-F]{6}$/.test(v)){cpick.value=v;triggerCustom()}};
+        chex.onblur=function(){var v=chex.value;if(v.charAt(0)!=='#')v='#'+v;if(/^#[0-9a-fA-F]{6}$/.test(v)){chex.value=v;cpick.value=v}else{chex.value=cpick.value}};
+    }
+    function triggerCustom(){
+        var val=inp.value.trim();
+        if(!val){custIconData=null;custImg=null;prev.classList.remove('ok');prev.innerHTML='<i class="fas fa-icons"></i>';sched();return}
+        var color=cpick?cpick.value:'#000000';
+        if(prefix==='si'){
+            prev.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+            fetchSimpleIcon(val,color,function(url){
+                if(url){
+                    custIconData=url;custImg=null;selIc='none';
+                    document.querySelectorAll('#icg .io').forEach(function(x){x.classList.remove('on')});
+                    document.querySelector('#icg .io[data-icon="none"]').classList.add('on');
+                    prev.innerHTML='<img src="'+url+'">';prev.classList.add('ok');
+                }else{
+                    custIconData=null;prev.innerHTML='<i class="fas fa-times" style="color:var(--danger)"></i>';prev.classList.remove('ok');
+                }
+                sched();
+            });
+        }else{
+            // CSS font icon
+            var cls=val;
+            if(prefix==='nf'&&val.indexOf('nf ')!==0) cls='nf '+val;
+            renderIconToDataURL(cls,color,function(url){
+                custIconData=url;custImg=null;selIc='none';
+                document.querySelectorAll('#icg .io').forEach(function(x){x.classList.remove('on')});
+                document.querySelector('#icg .io[data-icon="none"]').classList.add('on');
+                prev.innerHTML='<i class="'+cls+'" style="color:'+color+'"></i>';prev.classList.add('ok');
+                sched();
+            });
+        }
+    }
+    var debTm;
+    inp.addEventListener('input',function(){clearTimeout(debTm);debTm=setTimeout(triggerCustom,400)});
+}
+setupCustomIcon('fa','fa-prev');
+setupCustomIcon('ri','ri-prev');
+setupCustomIcon('nf','nf-prev');
+setupCustomIcon('si','si-prev');
 
 document.querySelectorAll('#eco .ec').forEach(function(o){o.onclick=function(){
     document.querySelectorAll('#eco .ec').forEach(function(x){x.classList.remove('on')});
@@ -346,7 +534,7 @@ document.querySelectorAll('#eco .ec').forEach(function(o){o.onclick=function(){
 var hist=[],hIdx=-1,maxHist=50,skipSnap=false;
 function snap(){
     if(skipSnap)return;
-    var s={tab:cTab,dSty:dSty,cSty:cSty,cdSty:cdSty,ecLv:ecLv,selIc:selIc,custImg:custImg,
+    var s={tab:cTab,dSty:dSty,cSty:cSty,cdSty:cdSty,ecLv:ecLv,selIc:selIc,custImg:custImg,custIconData:custIconData,
         cfg:document.getElementById('cfg').value,cbg:document.getElementById('cbg').value,
         cc:document.getElementById('cc').value,ccd:document.getElementById('ccd').value,
         qs:document.getElementById('qs').value,qm:document.getElementById('qm').value,
@@ -362,7 +550,7 @@ function snap(){
 function restore(json){
     skipSnap=true;
     var s=JSON.parse(json);
-    cTab=s.tab;dSty=s.dSty;cSty=s.cSty;cdSty=s.cdSty;ecLv=s.ecLv;selIc=s.selIc;custImg=s.custImg;
+    cTab=s.tab;dSty=s.dSty;cSty=s.cSty;cdSty=s.cdSty;ecLv=s.ecLv;selIc=s.selIc;custImg=s.custImg;custIconData=s.custIconData||null;
     document.querySelectorAll('#dtabs .tab').forEach(function(b){b.classList.toggle('on',b.dataset.tab===cTab)});
     document.querySelectorAll('.tc').forEach(function(c){c.classList.toggle('on',c.id==='tab-'+cTab)});
     [['dsg',dSty],['csg',cSty],['cdsg',cdSty]].forEach(function(g){document.querySelectorAll('#'+g[0]+' .so').forEach(function(o){o.classList.toggle('on',o.dataset.style===g[1])})});
@@ -403,7 +591,7 @@ uaEl.ondragleave=function(){uaEl.style.borderColor=''};
 uaEl.ondrop=function(e){e.preventDefault();uaEl.style.borderColor='';if(e.dataTransfer.files.length)hFile(e.dataTransfer.files[0])};
 uiEl.onchange=function(){if(uiEl.files.length)hFile(uiEl.files[0])};
 function hFile(f){if(!f.type.startsWith('image/'))return;var r=new FileReader();r.onload=function(e){
-    custImg=e.target.result;selIc='none';
+    custImg=e.target.result;selIc='none';custIconData=null;
     document.querySelectorAll('#icg .io').forEach(function(x){x.classList.remove('on')});
     document.querySelector('#icg .io[data-icon="none"]').classList.add('on');
     uaEl.classList.add('has');document.getElementById('ul').textContent=f.name;sched()};r.readAsDataURL(f)}
