@@ -29,7 +29,6 @@ header{position:relative;z-index:10;padding:20px 40px;display:flex;align-items:c
 .logo-text{display:flex;align-items:baseline;gap:6px}
 .logo-text .p1{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;letter-spacing:-.03em;background:linear-gradient(135deg,#fff,#ddd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .logo-text .p2{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;font-style:italic;letter-spacing:-.02em;background:linear-gradient(135deg,var(--acl),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.logo-text .dot{width:6px;height:6px;background:var(--ac2);border-radius:50%;display:inline-block;margin-left:2px;position:relative;top:-2px;box-shadow:0 0 8px var(--ac2)}
 .hlinks{display:flex;align-items:center;gap:12px}
 .hlink{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;background:var(--card);border:1px solid var(--brd);border-radius:var(--r1);color:var(--t2);text-decoration:none;font-size:13px;font-weight:500;transition:all var(--tr)}
 .hlink:hover{background:var(--hov);border-color:var(--t3);color:var(--t1)}
@@ -70,10 +69,10 @@ select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%
 .icon-src-tab:hover{color:var(--t2);background:var(--hov)}
 .icon-src-tab.on{background:var(--ac);color:#fff}
 .icon-src-content{display:none}.icon-src-content.on{display:block}
-.cust-icon-row{display:flex;gap:8px;align-items:start}
+.cust-icon-row{display:flex;gap:10px;align-items:flex-end}
 .cust-icon-input{flex:1}
 .cust-icon-input input{font-family:'JetBrains Mono',monospace!important;font-size:12.5px!important}
-.cust-icon-preview{width:48px;height:48px;background:var(--inp);border:2px solid var(--brd);border-radius:var(--r1);display:grid;place-items:center;font-size:22px;color:var(--t2);flex-shrink:0;transition:all var(--tr);overflow:hidden}
+.cust-icon-preview{width:48px;height:42px;background:var(--inp);border:2px solid var(--brd);border-radius:var(--r1);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--t2);flex-shrink:0;transition:all var(--tr);overflow:hidden;margin-bottom:0}
 .cust-icon-preview.ok{border-color:var(--ok);color:var(--t1)}
 .cust-icon-preview img{width:28px;height:28px;object-fit:contain}
 .icon-src-hint{font-size:11px;color:var(--t3);margin-top:6px;line-height:1.5}
@@ -150,7 +149,7 @@ footer a{color:var(--acl);text-decoration:none}footer a:hover{text-decoration:un
 <header>
     <a class="logo" id="logo-link" href="/">
         <div class="logo-icon" id="logo-icon"><i class="fas fa-qrcode"></i></div>
-        <div class="logo-text"><span class="p1" id="lt1">QR</span><span class="p2" id="lt2">Genius</span><span class="dot"></span></div>
+        <div class="logo-text"><span class="p1" id="lt1">QR</span><span class="p2" id="lt2">Genius</span></div>
     </a>
     <div class="hlinks" id="hlinks"></div>
 </header>
@@ -269,7 +268,6 @@ footer a{color:var(--acl);text-decoration:none}footer a:hover{text-decoration:un
                     <div class="cust-icon-preview" id="si-prev"><i class="fas fa-cube"></i></div>
                 </div>
                 <div class="icon-src-hint">Browse icons at <a href="https://icones.js.org/collection/simple-icons" target="_blank">icones.js.org</a> or <a href="https://simpleicons.org" target="_blank">simpleicons.org</a><br>Format: slug name (e.g. <code>github</code>, <code>discord</code>, <code>python</code>)</div>
-                <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="si-color" value="#000000"><input type="text" class="hex-in" id="si-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
             </div>
 
             <div class="icon-src-content" id="isrc-upload">
@@ -397,21 +395,25 @@ function setupSG(id,fn){document.querySelectorAll('#'+id+' .so').forEach(functio
 setupSG('dsg',function(v){dSty=v});setupSG('csg',function(v){cSty=v});setupSG('cdsg',function(v){cdSty=v});
 
 // ===================== ICON SOURCE TABS =====================
-var curIconSrc='presets',custIconData=null;
+var curIconSrc='presets',custIconData=null,activeIconSrc='presets';
+function switchIconTab(src){
+    curIconSrc=src;
+    document.querySelectorAll('#isrc-tabs .icon-src-tab').forEach(function(x){x.classList.toggle('on',x.dataset.src===src)});
+    document.querySelectorAll('.icon-src-content').forEach(function(x){x.classList.toggle('on',x.id==='isrc-'+src)});
+}
 document.querySelectorAll('#isrc-tabs .icon-src-tab').forEach(function(t){t.onclick=function(){
-    document.querySelectorAll('#isrc-tabs .icon-src-tab').forEach(function(x){x.classList.remove('on')});
-    t.classList.add('on');curIconSrc=t.dataset.src;
-    document.querySelectorAll('.icon-src-content').forEach(function(x){x.classList.remove('on')});
-    document.getElementById('isrc-'+curIconSrc).classList.add('on');
-    // when switching to presets with "none" selected, clear custom
-    if(curIconSrc==='presets'&&selIc==='none'){custIconData=null;custImg=null;sched()}
+    switchIconTab(t.dataset.src);
+    // when switching to presets with "none" selected and no preset active, clear custom
+    if(curIconSrc==='presets'&&selIc==='none'&&activeIconSrc!=='presets'){custIconData=null;custImg=null;sched()}
 }});
 
 document.querySelectorAll('#icg .io').forEach(function(o){o.onclick=function(){
     document.querySelectorAll('#icg .io').forEach(function(x){x.classList.remove('on')});
     o.classList.add('on');selIc=o.dataset.icon;
-    custImg=null;custIconData=null;
+    custImg=null;custIconData=null;activeIconSrc='presets';
     document.getElementById('ua').classList.remove('has');document.getElementById('ul').textContent='Click or drag to upload (PNG, JPG, SVG)';
+    // clear all custom icon inputs
+    ['fa','ri','nf','si'].forEach(function(p){var el=document.getElementById(p+'-class');if(el)el.value='';var pv=document.getElementById(p+'-prev');if(pv){pv.classList.remove('ok');pv.innerHTML='<i class="fas fa-icons"></i>'}});
     sched()}});
 
 // ===================== RENDER CSS ICON TO DATA URL =====================
@@ -482,31 +484,44 @@ function setupCustomIcon(prefix,prevId){
         chex.oninput=function(){var v=chex.value;if(v.charAt(0)!=='#')v='#'+v;if(/^#[0-9a-fA-F]{6}$/.test(v)){cpick.value=v;triggerCustom()}};
         chex.onblur=function(){var v=chex.value;if(v.charAt(0)!=='#')v='#'+v;if(/^#[0-9a-fA-F]{6}$/.test(v)){chex.value=v;cpick.value=v}else{chex.value=cpick.value}};
     }
+    function clearOtherProviders(){
+        ['fa','ri','nf','si'].forEach(function(p){
+            if(p===prefix)return;
+            var el=document.getElementById(p+'-class');if(el)el.value='';
+            var pv=document.getElementById(p+'-prev');if(pv){pv.classList.remove('ok');pv.innerHTML='<i class="fas fa-icons"></i>'}
+        });
+        // clear presets selection to "none"
+        document.querySelectorAll('#icg .io').forEach(function(x){x.classList.remove('on')});
+        document.querySelector('#icg .io[data-icon="none"]').classList.add('on');
+        selIc='none';
+        // clear upload
+        document.getElementById('ua').classList.remove('has');document.getElementById('ul').textContent='Click or drag to upload (PNG, JPG, SVG)';
+        custImg=null;
+    }
     function triggerCustom(){
         var val=inp.value.trim();
         if(!val){custIconData=null;custImg=null;prev.classList.remove('ok');prev.innerHTML='<i class="fas fa-icons"></i>';sched();return}
         var color=cpick?cpick.value:'#000000';
+        clearOtherProviders();
+        var srcMap={fa:'fontawesome',ri:'remix',nf:'nerd',si:'simple'};
+        activeIconSrc=srcMap[prefix]||prefix;
+        switchIconTab(activeIconSrc);
         if(prefix==='si'){
             prev.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
-            fetchSimpleIcon(val,color,function(url){
+            fetchSimpleIcon(val,null,function(url){
                 if(url){
-                    custIconData=url;custImg=null;selIc='none';
-                    document.querySelectorAll('#icg .io').forEach(function(x){x.classList.remove('on')});
-                    document.querySelector('#icg .io[data-icon="none"]').classList.add('on');
+                    custIconData=url;
                     prev.innerHTML='<img src="'+url+'">';prev.classList.add('ok');
                 }else{
-                    custIconData=null;prev.innerHTML='<i class="fas fa-times" style="color:var(--danger)"></i>';prev.classList.remove('ok');
+                    custIconData=null;prev.innerHTML='<i class="fas fa-times" style="color:#e17055"></i>';prev.classList.remove('ok');
                 }
                 sched();
             });
         }else{
-            // CSS font icon
             var cls=val;
             if(prefix==='nf'&&val.indexOf('nf ')!==0) cls='nf '+val;
             renderIconToDataURL(cls,color,function(url){
-                custIconData=url;custImg=null;selIc='none';
-                document.querySelectorAll('#icg .io').forEach(function(x){x.classList.remove('on')});
-                document.querySelector('#icg .io[data-icon="none"]').classList.add('on');
+                custIconData=url;
                 prev.innerHTML='<i class="'+cls+'" style="color:'+color+'"></i>';prev.classList.add('ok');
                 sched();
             });
@@ -591,9 +606,11 @@ uaEl.ondragleave=function(){uaEl.style.borderColor=''};
 uaEl.ondrop=function(e){e.preventDefault();uaEl.style.borderColor='';if(e.dataTransfer.files.length)hFile(e.dataTransfer.files[0])};
 uiEl.onchange=function(){if(uiEl.files.length)hFile(uiEl.files[0])};
 function hFile(f){if(!f.type.startsWith('image/'))return;var r=new FileReader();r.onload=function(e){
-    custImg=e.target.result;selIc='none';custIconData=null;
+    custImg=e.target.result;selIc='none';custIconData=null;activeIconSrc='upload';
     document.querySelectorAll('#icg .io').forEach(function(x){x.classList.remove('on')});
     document.querySelector('#icg .io[data-icon="none"]').classList.add('on');
+    ['fa','ri','nf','si'].forEach(function(p){var el=document.getElementById(p+'-class');if(el)el.value='';var pv=document.getElementById(p+'-prev');if(pv){pv.classList.remove('ok');pv.innerHTML='<i class="fas fa-icons"></i>'}});
+    switchIconTab('upload');
     uaEl.classList.add('has');document.getElementById('ul').textContent=f.name;sched()};r.readAsDataURL(f)}
 
 function toast(m){var t=document.getElementById('toast');document.getElementById('tm').textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2500)}
