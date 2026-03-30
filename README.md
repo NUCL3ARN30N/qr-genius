@@ -44,7 +44,7 @@
 ## Controls
 
 - **Live Preview:** QR code updates automatically on every change
-- **Download:** Export as PNG or SVG
+- **Download:** Export as PNG, SVG and PDF (including Background)
 - **Custom Icons:** Select a preset or drag & drop your own image
 
 ## Requirements
