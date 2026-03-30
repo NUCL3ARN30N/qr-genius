@@ -9,7 +9,6 @@ const CFG = {
     logoText: ['QR', 'Genius'],
     logoIcon: 'fas fa-qrcode',           // FontAwesome class
     logoLink: '/',
-    faviconSVG: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="16" fill="%236c5ce7"/><text x="50" y="70" font-size="54" font-family="sans-serif" fill="white" text-anchor="middle">QR</text></svg>',
     headerLinks: [
         { label: 'GitHub', icon: 'fab fa-github', url: 'https://github.com/nucl3arn30n/qr-genius', external: true }
     ],
@@ -25,7 +24,6 @@ var _li=document.getElementById('logo-icon');if(_li)_li.innerHTML='<i class="'+C
 var _ll=document.getElementById('logo-link');if(_ll)_ll.href=CFG.logoLink;
 var _ft=document.getElementById('ft');if(_ft)_ft.innerHTML='<p>'+CFG.footerHTML+'</p>';
 var _iu=document.getElementById('input-url');if(_iu&&!_iu.value)_iu.value=CFG.defaultURL;
-if(CFG.faviconSVG){var _fi=document.getElementById('dynamic-favicon');if(_fi)_fi.href='data:image/svg+xml,'+encodeURIComponent(CFG.faviconSVG)}
 var hc=document.getElementById('hlinks');
 if(hc&&hc.children.length===0){CFG.headerLinks.forEach(function(l){var a=document.createElement('a');a.className='hlink';a.href=l.url;if(l.external)a.target='_blank';a.innerHTML='<i class="'+l.icon+'"></i> '+l.label;hc.appendChild(a)})};
 
@@ -84,12 +82,84 @@ function gen(){
     qrI=new QRCodeStyling(c);qrI.append(o);
     document.getElementById('dp').disabled=false;
     document.getElementById('ds').disabled=false;
+    document.getElementById('dpdf').disabled=false;
     document.getElementById('qi').style.display='block';
     document.getElementById('qd').textContent=data.length>60?data.substring(0,60)+'...':data;
 }
 
 document.getElementById('dp').onclick=function(){if(qrI){qrI.download({name:'qr-genius',extension:'png'});toast('PNG downloaded!')}};
 document.getElementById('ds').onclick=function(){if(qrI){qrI.download({name:'qr-genius',extension:'svg'});toast('SVG downloaded!')}};
+// ===================== PDF BACKGROUND UPLOAD =====================
+var pdfBgData=null,pdfBgType=null;
+var pdfuaEl=document.getElementById('pdfua'),pdfuiEl=document.getElementById('pdfui');
+pdfuaEl.onclick=function(){pdfuiEl.click()};
+pdfuaEl.ondragover=function(e){e.preventDefault();pdfuaEl.style.borderColor='var(--ac)'};
+pdfuaEl.ondragleave=function(){pdfuaEl.style.borderColor=''};
+pdfuaEl.ondrop=function(e){e.preventDefault();pdfuaEl.style.borderColor='';if(e.dataTransfer.files.length)handlePdfBg(e.dataTransfer.files[0])};
+pdfuiEl.onchange=function(){if(pdfuiEl.files.length)handlePdfBg(pdfuiEl.files[0])};
+function handlePdfBg(f){
+    if(!f.type.match(/^image\/(png|jpeg|svg\+xml)$/)){toast('Use PNG, JPG or SVG');return}
+    var r=new FileReader();r.onload=function(e){
+        pdfBgData=e.target.result;
+        pdfBgType=f.type.indexOf('svg')!==-1?'SVG':(f.type.indexOf('png')!==-1?'PNG':'JPEG');
+        pdfuaEl.classList.add('has');
+        document.getElementById('pdful').textContent=f.name;
+        document.getElementById('pdfuc').style.display='flex';
+    };r.readAsDataURL(f);
+}
+document.getElementById('pdfuc').onclick=function(){
+    pdfBgData=null;pdfBgType=null;
+    pdfuaEl.classList.remove('has');
+    document.getElementById('pdful').textContent='Upload A4 background (PNG, JPG, SVG)';
+    document.getElementById('pdfuc').style.display='none';
+    pdfuiEl.value='';
+};
+
+// ===================== PDF EXPORT =====================
+document.getElementById('dpdf').onclick=function(){
+    if(!qrI)return;
+    var canvas=document.querySelector('#qo canvas');
+    if(!canvas){toast('Generate a QR code first');return}
+    var jsPDFClass=window.jspdf&&window.jspdf.jsPDF||window.jsPDF;
+    if(!jsPDFClass){toast('PDF library not loaded');return}
+    try{
+        var pdf=new jsPDFClass({orientation:'portrait',unit:'mm',format:'a4'});
+        var pw=210,ph=297;
+
+        function addQrAndSave(){
+            var imgData=canvas.toDataURL('image/png');
+            var qrSize=120;
+            var x=(pw-qrSize)/2;
+            var y=(ph-qrSize)/2;
+            pdf.addImage(imgData,'PNG',x,y,qrSize,qrSize);
+            pdf.save('qr-genius.pdf');
+            toast('PDF downloaded!');
+        }
+
+        if(pdfBgData&&pdfBgType){
+            if(pdfBgType==='SVG'){
+                // rasterize SVG to canvas first
+                var img=new Image();
+                img.onload=function(){
+                    var cvs=document.createElement('canvas');
+                    // A4 at 150 DPI
+                    cvs.width=1240;cvs.height=1754;
+                    var ctx=cvs.getContext('2d');
+                    ctx.drawImage(img,0,0,cvs.width,cvs.height);
+                    pdf.addImage(cvs.toDataURL('image/png'),'PNG',0,0,pw,ph);
+                    addQrAndSave();
+                };
+                img.onerror=function(){toast('Could not load SVG background');addQrAndSave()};
+                img.src=pdfBgData;
+            }else{
+                pdf.addImage(pdfBgData,pdfBgType,0,0,pw,ph);
+                addQrAndSave();
+            }
+        }else{
+            addQrAndSave();
+        }
+    }catch(e){console.error('PDF export error:',e);toast('PDF export failed')}
+};
 
 document.querySelectorAll('#dtabs .tab').forEach(function(b){b.onclick=function(){
     document.querySelectorAll('#dtabs .tab').forEach(function(x){x.classList.remove('on')});

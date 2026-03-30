@@ -1028,3 +1028,59 @@ header {
 }
 }
 
+.pdf-bg-section {
+    margin-top:14px;
+    padding:12px;
+    background:var(--bg2);
+    border-radius:var(--r2);
+    border:1px solid var(--brd);
+}
+
+.pdf-bg-header {
+    font-size:12px;
+    font-weight:600;
+    color:var(--t2);
+    margin-bottom:10px;
+}
+
+.pdf-bg-header i {
+    color:var(--ac2);
+    margin-right:4px;
+}
+
+.pdf-bg-row {
+    display:flex;
+    gap:8px;
+    align-items:stretch;
+}
+
+.pdf-bg-upload {
+    flex:1;
+    padding:12px;
+    font-size:12px;
+}
+
+.pdf-bg-upload i {
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+.pdf-bg-clear {
+    width:40px;
+    border:2px solid var(--brd);
+    border-radius:var(--r1);
+    background:var(--inp);
+    color:var(--t3);
+    cursor:pointer;
+    transition:all var(--tr);
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.pdf-bg-clear:hover {
+    border-color:#e17055;
+    color:#e17055;
+    background:rgba(225,112,85,.1);
+}
