@@ -1084,3 +1084,239 @@ header {
     color:#e17055;
     background:rgba(225,112,85,.1);
 }
+
+/* ===================== MODE SWITCHER ===================== */
+.mode-tabs {
+    display:flex;
+    gap:4px;
+    max-width:1100px;
+    margin:24px auto 20px;
+    padding:4px;
+    background:var(--card);
+    border-radius:var(--r2);
+    border:1px solid var(--brd);
+}
+
+.mode-tab {
+    flex:1;
+    padding:12px 20px;
+    border:none;
+    background:none;
+    color:var(--t3);
+    font-family:inherit;
+    font-size:14px;
+    font-weight:600;
+    border-radius:10px;
+    cursor:pointer;
+    transition:all var(--tr);
+}
+
+.mode-tab:hover {
+    color:var(--t2);
+    background:var(--hov);
+}
+
+.mode-tab.on {
+    background:var(--ac);
+    color:#fff;
+    box-shadow:0 2px 12px rgba(108,92,231,.3);
+}
+
+.mode-tab i {
+    margin-right:6px;
+}
+
+/* ===================== QR READER ===================== */
+.reader-app {
+    max-width:1100px;
+}
+
+.reader-panel {
+    min-height:300px;
+}
+
+.reader-upload {
+    padding:40px 20px;
+    min-height:160px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.reader-actions {
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+}
+
+.reader-action-btn {
+    flex:1;
+    justify-content:center;
+}
+
+.reader-preview-wrap {
+    position:relative;
+    margin-top:14px;
+    background:var(--inp);
+    border:2px solid var(--brd);
+    border-radius:var(--r2);
+    padding:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.reader-preview-wrap img {
+    max-width:100%;
+    max-height:240px;
+    border-radius:var(--r1);
+}
+
+.reader-clear {
+    position:absolute;
+    top:8px;
+    right:8px;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+}
+
+.reader-placeholder {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:200px;
+    text-align:center;
+}
+
+.reader-result {
+    animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity:0; transform:translateY(8px) }
+    to { opacity:1; transform:translateY(0) }
+}
+
+.reader-type {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 14px;
+    background:var(--acg);
+    color:var(--acl);
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    margin-bottom:16px;
+}
+
+.reader-raw-wrap {
+    position:relative;
+    margin-bottom:16px;
+}
+
+.reader-raw-label {
+    font-size:11px;
+    font-weight:600;
+    color:var(--t3);
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    margin-bottom:6px;
+    display:block;
+}
+
+.reader-raw {
+    background:var(--bg);
+    border:1px solid var(--brd);
+    border-radius:var(--r1);
+    padding:12px 14px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--t1);
+    white-space:pre-wrap;
+    word-break:break-all;
+    margin:0 0 10px;
+    max-height:200px;
+    overflow-y:auto;
+}
+
+.reader-copy-btn {
+    font-size:12px;
+    padding:6px 14px;
+}
+
+.reader-parsed-section {
+    margin-top:14px;
+    padding:12px 14px;
+    background:var(--bg2);
+    border:1px solid var(--brd);
+    border-radius:var(--r1);
+}
+
+.reader-parsed-row {
+    display:flex;
+    gap:10px;
+    padding:6px 0;
+    border-bottom:1px solid var(--brd);
+    font-size:13px;
+}
+
+.reader-parsed-row:last-child {
+    border-bottom:none;
+}
+
+.reader-parsed-key {
+    color:var(--t3);
+    font-weight:600;
+    min-width:90px;
+    flex-shrink:0;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.3px;
+    padding-top:1px;
+}
+
+.reader-parsed-val {
+    color:var(--t1);
+    word-break:break-all;
+}
+
+.reader-open-wrap {
+    margin-top:14px;
+}
+
+.reader-open-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--ac);
+    color:#fff;
+    text-decoration:none;
+    justify-content:center;
+    width:100%;
+}
+
+.reader-open-btn:hover {
+    background:#5b4bd5;
+}
+
+.reader-error {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:200px;
+    text-align:center;
+    color:#e17055;
+    gap:10px;
+    font-size:14px;
+}
+
+.reader-error i {
+    font-size:28px;
+}

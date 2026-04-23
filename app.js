@@ -399,4 +399,244 @@ function hFile(f){if(!f.type.startsWith('image/'))return;var r=new FileReader();
 function toast(m){var t=document.getElementById('toast');document.getElementById('tm').textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2500)}
 
 setTimeout(gen,300);
+
+// ===================== MODE SWITCHER =====================
+document.getElementById('mode-create').onclick=function(){
+    document.getElementById('mode-create').classList.add('on');
+    document.getElementById('mode-read').classList.remove('on');
+    document.getElementById('app-create').style.display='';
+    document.getElementById('app-read').style.display='none';
+};
+document.getElementById('mode-read').onclick=function(){
+    document.getElementById('mode-read').classList.add('on');
+    document.getElementById('mode-create').classList.remove('on');
+    document.getElementById('app-read').style.display='';
+    document.getElementById('app-create').style.display='none';
+};
+
+// ===================== QR READER =====================
+var qrReadUa=document.getElementById('qr-read-ua'),qrReadIn=document.getElementById('qr-read-input');
+qrReadUa.onclick=function(){qrReadIn.click()};
+qrReadUa.ondragover=function(e){e.preventDefault();qrReadUa.style.borderColor='var(--ac)'};
+qrReadUa.ondragleave=function(){qrReadUa.style.borderColor=''};
+qrReadUa.ondrop=function(e){e.preventDefault();qrReadUa.style.borderColor='';if(e.dataTransfer.files.length)decodeQRFile(e.dataTransfer.files[0])};
+qrReadIn.onchange=function(){if(qrReadIn.files.length)decodeQRFile(qrReadIn.files[0])};
+
+document.getElementById('qr-read-clear').onclick=function(){
+    document.getElementById('qr-read-preview-wrap').style.display='none';
+    document.getElementById('reader-result').style.display='none';
+    document.getElementById('reader-error').style.display='none';
+    document.getElementById('reader-placeholder').style.display='flex';
+    document.getElementById('qr-read-label').textContent='Drop or click to upload a QR code image';
+    qrReadUa.classList.remove('has');
+    qrReadIn.value='';
+};
+
+document.getElementById('qr-paste-btn').onclick=function(){
+    if(!navigator.clipboard||!navigator.clipboard.read){toast('Clipboard not supported in this browser');return}
+    navigator.clipboard.read().then(function(items){
+        for(var i=0;i<items.length;i++){
+            var types=items[i].types;
+            for(var j=0;j<types.length;j++){
+                if(types[j].startsWith('image/')){
+                    items[i].getType(types[j]).then(function(blob){decodeQRBlob(blob)});return;
+                }
+            }
+        }
+        toast('No image found in clipboard');
+    }).catch(function(){toast('Could not read clipboard')});
+};
+
+document.getElementById('reader-copy').onclick=function(){
+    var raw=document.getElementById('reader-raw').textContent;
+    navigator.clipboard.writeText(raw).then(function(){toast('Copied to clipboard!')}).catch(function(){toast('Copy failed')});
+};
+
+function decodeQRFile(f){
+    if(!f.type.startsWith('image/')){toast('Please upload an image file');return}
+    decodeQRBlob(f);
+}
+
+function decodeQRBlob(blob){
+    var url=URL.createObjectURL(blob);
+    var img=new Image();
+    img.onload=function(){
+        document.getElementById('qr-read-preview').src=url;
+        document.getElementById('qr-read-preview-wrap').style.display='flex';
+        document.getElementById('qr-read-label').textContent=blob.name||'Image loaded';
+        qrReadUa.classList.add('has');
+
+        // draw to canvas and decode
+        var cvs=document.createElement('canvas');
+        // Use higher resolution for better detection
+        var maxDim=Math.max(img.naturalWidth,img.naturalHeight,800);
+        var scale=maxDim>1600?1600/maxDim:1;
+        cvs.width=Math.round(img.naturalWidth*scale);
+        cvs.height=Math.round(img.naturalHeight*scale);
+        var ctx=cvs.getContext('2d');
+        ctx.drawImage(img,0,0,cvs.width,cvs.height);
+        var imageData=ctx.getImageData(0,0,cvs.width,cvs.height);
+
+        if(typeof jsQR==='undefined'){showReaderError('QR reader library not loaded');return}
+        var result=jsQR(imageData.data,cvs.width,cvs.height,{inversionAttempts:'attemptBoth'});
+
+        if(result&&result.data){
+            showReaderResult(result.data);
+        }else{
+            // retry with grayscale + contrast enhancement
+            for(var k=0;k<imageData.data.length;k+=4){
+                var gray=imageData.data[k]*0.299+imageData.data[k+1]*0.587+imageData.data[k+2]*0.114;
+                gray=gray>128?255:0;
+                imageData.data[k]=imageData.data[k+1]=imageData.data[k+2]=gray;
+            }
+            result=jsQR(imageData.data,cvs.width,cvs.height,{inversionAttempts:'attemptBoth'});
+            if(result&&result.data){
+                showReaderResult(result.data);
+            }else{
+                showReaderError('Could not decode QR code. Make sure the image contains a clear, readable QR code.');
+            }
+        }
+    };
+    img.onerror=function(){showReaderError('Could not load image')};
+    img.src=url;
+}
+
+function showReaderError(msg){
+    document.getElementById('reader-placeholder').style.display='none';
+    document.getElementById('reader-result').style.display='none';
+    document.getElementById('reader-error').style.display='flex';
+    document.getElementById('reader-error-msg').textContent=msg;
+}
+
+function showReaderResult(data){
+    document.getElementById('reader-placeholder').style.display='none';
+    document.getElementById('reader-error').style.display='none';
+    document.getElementById('reader-result').style.display='block';
+    document.getElementById('reader-raw').textContent=data;
+
+    var parsed=parseQRData(data);
+    document.getElementById('reader-type').innerHTML='<i class="'+parsed.icon+'"></i> '+parsed.type;
+
+    var parsedEl=document.getElementById('reader-parsed');
+    parsedEl.innerHTML='';
+    if(parsed.fields.length>0){
+        var sec=document.createElement('div');sec.className='reader-parsed-section';
+        parsed.fields.forEach(function(f){
+            var row=document.createElement('div');row.className='reader-parsed-row';
+            row.innerHTML='<span class="reader-parsed-key">'+f.key+'</span><span class="reader-parsed-val">'+escHtml(f.value)+'</span>';
+            sec.appendChild(row);
+        });
+        parsedEl.appendChild(sec);
+    }
+
+    var openWrap=document.getElementById('reader-open-wrap');
+    var openBtn=document.getElementById('reader-open');
+    if(parsed.link){
+        openBtn.href=parsed.link;
+        openBtn.innerHTML='<i class="fas fa-external-link-alt"></i> '+parsed.linkLabel;
+        openWrap.style.display='block';
+    }else{
+        openWrap.style.display='none';
+    }
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function parseQRData(data){
+    var r={type:'Text',icon:'fas fa-font',fields:[],link:null,linkLabel:'Open'};
+
+    // URL
+    if(/^https?:\/\//i.test(data)){
+        r.type='URL';r.icon='fas fa-link';
+        r.fields.push({key:'URL',value:data});
+        r.link=data;r.linkLabel='Open URL';
+        return r;
+    }
+
+    // mailto
+    if(/^mailto:/i.test(data)){
+        r.type='Email';r.icon='fas fa-envelope';
+        var mailParts=data.replace(/^mailto:/i,'').split('?');
+        r.fields.push({key:'Email',value:mailParts[0]});
+        if(mailParts[1]){
+            var params=new URLSearchParams(mailParts[1]);
+            if(params.get('subject'))r.fields.push({key:'Subject',value:params.get('subject')});
+            if(params.get('body'))r.fields.push({key:'Body',value:params.get('body')});
+        }
+        r.link=data;r.linkLabel='Compose Email';
+        return r;
+    }
+
+    // tel
+    if(/^tel:/i.test(data)){
+        r.type='Phone';r.icon='fas fa-phone';
+        r.fields.push({key:'Number',value:data.replace(/^tel:/i,'')});
+        r.link=data;r.linkLabel='Call Number';
+        return r;
+    }
+
+    // sms
+    if(/^sms:/i.test(data)){
+        r.type='SMS';r.icon='fas fa-comment';
+        var smsParts=data.replace(/^sms:/i,'').split('?');
+        r.fields.push({key:'Number',value:smsParts[0]});
+        if(smsParts[1]){
+            var sp=new URLSearchParams(smsParts[1]);
+            if(sp.get('body'))r.fields.push({key:'Message',value:sp.get('body')});
+        }
+        r.link=data;r.linkLabel='Send SMS';
+        return r;
+    }
+
+    // WiFi
+    if(/^WIFI:/i.test(data)){
+        r.type='WiFi';r.icon='fas fa-wifi';
+        var wm=data.match(/S:([^;]*)/);if(wm)r.fields.push({key:'SSID',value:wm[1]});
+        var wp=data.match(/P:([^;]*)/);if(wp)r.fields.push({key:'Password',value:wp[1]});
+        var wt=data.match(/T:([^;]*)/);if(wt)r.fields.push({key:'Encryption',value:wt[1]});
+        var wh=data.match(/H:([^;]*)/);if(wh&&wh[1]==='true')r.fields.push({key:'Hidden',value:'Yes'});
+        return r;
+    }
+
+    // vCard
+    if(/^BEGIN:VCARD/i.test(data)){
+        r.type='vCard / Contact';r.icon='fas fa-address-card';
+        var vn=data.match(/FN:(.+)/i);if(vn)r.fields.push({key:'Name',value:vn[1].trim()});
+        var vo=data.match(/ORG:(.+)/i);if(vo)r.fields.push({key:'Organization',value:vo[1].trim()});
+        var vt=data.match(/TEL:(.+)/i);if(vt)r.fields.push({key:'Phone',value:vt[1].trim()});
+        var ve=data.match(/EMAIL:(.+)/i);if(ve)r.fields.push({key:'Email',value:ve[1].trim()});
+        var vu=data.match(/URL:(.+)/i);if(vu){r.fields.push({key:'Website',value:vu[1].trim()});r.link=vu[1].trim();r.linkLabel='Open Website'}
+        var va=data.match(/ADR[^:]*:(.+)/i);if(va)r.fields.push({key:'Address',value:va[1].replace(/;/g,', ').trim()});
+        return r;
+    }
+
+    // vCalendar / iCal Event
+    if(/^BEGIN:VCALENDAR/i.test(data)||/^BEGIN:VEVENT/i.test(data)){
+        r.type='Calendar Event';r.icon='fas fa-calendar';
+        var es=data.match(/SUMMARY:(.+)/i);if(es)r.fields.push({key:'Title',value:es[1].trim()});
+        var el=data.match(/LOCATION:(.+)/i);if(el)r.fields.push({key:'Location',value:el[1].trim()});
+        var eds=data.match(/DTSTART:?(\d{8}T?\d{4,6})/i);if(eds)r.fields.push({key:'Start',value:formatDt(eds[1])});
+        var ede=data.match(/DTEND:?(\d{8}T?\d{4,6})/i);if(ede)r.fields.push({key:'End',value:formatDt(ede[1])});
+        var ed=data.match(/DESCRIPTION:(.+)/i);if(ed)r.fields.push({key:'Description',value:ed[1].trim()});
+        return r;
+    }
+
+    // Plain text fallback
+    r.fields.push({key:'Content',value:data});
+    // If it looks like a URL without protocol
+    if(/^[\w][\w.-]+\.\w{2,}(\/|$)/i.test(data)){
+        r.link='https://'+data;r.linkLabel='Open as URL';
+        r.type='URL (no protocol)';r.icon='fas fa-link';
+    }
+    return r;
+}
+
+function formatDt(s){
+    // 20250115T143000 -> 2025-01-15 14:30
+    if(s.length>=13){
+        return s.substring(0,4)+'-'+s.substring(4,6)+'-'+s.substring(6,8)+' '+s.substring(9,11)+':'+s.substring(11,13);
+    }
+    return s;
+}
+
 })();

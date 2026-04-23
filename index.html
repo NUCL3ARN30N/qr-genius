@@ -35,7 +35,11 @@
       </a>
     </div>
   </header>
-<div class="app">
+<div class="mode-tabs">
+    <button class="mode-tab on" id="mode-create"><i class="fas fa-plus-circle"></i> Create QR</button>
+    <button class="mode-tab" id="mode-read"><i class="fas fa-search"></i> Read QR</button>
+</div>
+<div class="app" id="app-create">
     <div class="panel">
         <div class="ph"><i class="fas fa-sliders-h"></i> QR Code Configuration</div>
         <div class="pb">
@@ -175,8 +179,54 @@
         </div>
     </div>
 </div>
+<div class="app reader-app" id="app-read" style="display:none">
+    <div class="panel reader-panel">
+        <div class="ph"><i class="fas fa-camera"></i> Upload QR Code</div>
+        <div class="pb">
+            <div class="ua reader-upload" id="qr-read-ua">
+                <i class="fas fa-qrcode" style="font-size:32px;margin-bottom:8px"></i>
+                <span id="qr-read-label">Drop or click to upload a QR code image</span>
+                <span class="hn" style="margin-top:4px">Supports PNG, JPG, SVG, GIF, BMP, WebP</span>
+                <input type="file" id="qr-read-input" accept="image/*" hidden>
+            </div>
+            <div class="reader-actions">
+                <button class="db reader-action-btn" id="qr-paste-btn"><i class="fas fa-paste"></i> Paste from Clipboard</button>
+            </div>
+            <div class="reader-preview-wrap" id="qr-read-preview-wrap" style="display:none">
+                <img id="qr-read-preview" alt="Uploaded QR code">
+                <button class="pdf-bg-clear reader-clear" id="qr-read-clear"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="panel reader-panel">
+        <div class="ph"><i class="fas fa-info-circle"></i> Decoded Result</div>
+        <div class="pb">
+            <div class="reader-placeholder" id="reader-placeholder">
+                <i class="fas fa-arrow-left" style="font-size:24px;margin-bottom:8px;color:var(--t3)"></i>
+                <p style="color:var(--t3)">Upload a QR code image to decode its contents</p>
+            </div>
+            <div class="reader-result" id="reader-result" style="display:none">
+                <div class="reader-type" id="reader-type"></div>
+                <div class="reader-raw-wrap">
+                    <label class="reader-raw-label">Raw Data</label>
+                    <pre class="reader-raw" id="reader-raw"></pre>
+                    <button class="db reader-copy-btn" id="reader-copy"><i class="fas fa-copy"></i> Copy</button>
+                </div>
+                <div id="reader-parsed"></div>
+                <div class="reader-open-wrap" id="reader-open-wrap" style="display:none">
+                    <a class="db reader-open-btn" id="reader-open" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Open Link</a>
+                </div>
+            </div>
+            <div class="reader-error" id="reader-error" style="display:none">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="reader-error-msg">Could not decode QR code</span>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="tm">Downloaded!</span></div>
 <footer id="ft"></footer>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
 <script src="app.js"></script>
 </body>
