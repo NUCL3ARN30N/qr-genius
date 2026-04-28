@@ -1257,4 +1257,41 @@ document.getElementById('bulk-pdf').onclick=function(){
     addPage(0);
 };
 
+// ===================== PWA INSTALL =====================
+var deferredPrompt=null;
+var installBtn=document.getElementById('pwa-install');
+
+function isInstalled(){
+    return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+}
+
+window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();
+    deferredPrompt=e;
+    if(!isInstalled())installBtn.style.display='';
+});
+
+installBtn.onclick=function(){
+    if(!deferredPrompt)return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(result){
+        if(result.outcome==='accepted'){
+            installBtn.style.display='none';
+            toast('App installed!');
+        }
+        deferredPrompt=null;
+    });
+};
+
+window.addEventListener('appinstalled',function(){
+    installBtn.style.display='none';
+    deferredPrompt=null;
+});
+
+if(isInstalled())installBtn.style.display='none';
+
+if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js').catch(function(e){console.log('SW registration failed:',e)});
+}
+
 })();

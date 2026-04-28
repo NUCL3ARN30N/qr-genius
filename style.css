@@ -994,6 +994,10 @@ footer a:hover {
 
 @media(max-width:960px){.app{grid-template-columns:1fr;padding:20px}
 
+.mode-tabs {
+    margin:16px 16px 16px;
+}
+
 .pp {
     position:relative;
     top:0;
@@ -1010,6 +1014,23 @@ header {
 }
 
 @media(max-width:600px){.tabs{overflow-x:auto}
+
+.mode-tabs {
+    margin:12px 12px 12px;
+    gap:3px;
+    padding:3px;
+}
+
+.mode-tab {
+    padding:9px 8px;
+    font-size:12px;
+    border-radius:8px;
+}
+
+.mode-tab i {
+    margin-right:4px;
+    font-size:11px;
+}
 
 .sg {
     grid-template-columns:repeat(2,1fr);
@@ -1560,4 +1581,43 @@ header {
     border-color:#e17055;
     color:#e17055;
     background:rgba(225,112,85,.1);
+}
+
+/* ===================== PWA INSTALL BUTTON ===================== */
+.install-btn {
+    background:linear-gradient(135deg,var(--ac),var(--ac2));
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    font-weight:600;
+    border-radius:8px;
+    padding:8px 16px;
+    font-size:13px;
+    transition:all var(--tr);
+    animation:installPulse 2s ease-in-out infinite;
+}
+
+.install-btn:hover {
+    transform:translateY(-1px);
+    box-shadow:0 4px 16px rgba(108,92,231,.4);
+    animation:none;
+}
+
+@keyframes installPulse {
+    0%,100% { box-shadow:0 0 0 0 rgba(108,92,231,.4) }
+    50% { box-shadow:0 0 0 6px rgba(108,92,231,0) }
+}
+
+@media(max-width:960px) {
+    .install-btn {
+        position:fixed;
+        bottom:20px;
+        right:20px;
+        z-index:100;
+        padding:12px 20px;
+        font-size:14px;
+        border-radius:50px;
+        box-shadow:0 4px 20px rgba(0,0,0,.4);
+    }
 }

@@ -1,0 +1,25 @@
+{
+  "name": "QR Genius",
+  "short_name": "QR Genius",
+  "description": "Advanced QR code generator & reader with custom styles, icon libraries, shape masks, gradients, bulk export & live preview",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08080a",
+  "theme_color": "#6c5ce7",
+  "orientation": "any",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
