@@ -36,8 +36,9 @@
     </div>
   </header>
 <div class="mode-tabs">
-    <button class="mode-tab on" id="mode-create"><i class="fas fa-plus-circle"></i> Create QR</button>
-    <button class="mode-tab" id="mode-read"><i class="fas fa-search"></i> Read QR</button>
+    <button class="mode-tab on" id="mode-create"><i class="fas fa-plus-circle"></i> Create</button>
+    <button class="mode-tab" id="mode-read"><i class="fas fa-search"></i> Read</button>
+    <button class="mode-tab" id="mode-bulk"><i class="fas fa-layer-group"></i> Bulk</button>
 </div>
 <div class="app" id="app-create">
     <div class="panel">
@@ -80,8 +81,81 @@
             <div class="sg" id="cdsg"><div class="so on" data-style="square">Square</div><div class="so" data-style="dot">Dot</div></div>
             <div class="sd"></div>
             <div class="st"><i class="fas fa-tint"></i> Colors</div>
-            <div class="cr"><div class="fg"><label>Foreground</label><div class="cpw"><input type="color" id="cfg" value="#000000"><input type="text" class="hex-in" id="cfgh" value="#000000" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Background</label><div class="cpw"><input type="color" id="cbg" value="#ffffff"><input type="text" class="hex-in" id="cbgh" value="#ffffff" maxlength="7" spellcheck="false"></div></div></div>
+            <div class="tr"><span>Use Gradient</span><div class="tg" id="use-grad" data-active="false"></div></div>
+            <div id="color-solid">
+                <div class="cr"><div class="fg"><label>Foreground</label><div class="cpw"><input type="color" id="cfg" value="#000000"><input type="text" class="hex-in" id="cfgh" value="#000000" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Background</label><div class="cpw"><input type="color" id="cbg" value="#ffffff"><input type="text" class="hex-in" id="cbgh" value="#ffffff" maxlength="7" spellcheck="false"></div></div></div>
+            </div>
+            <div id="color-grad" style="display:none">
+                <div class="cr"><div class="fg"><label>Gradient Start</label><div class="cpw"><input type="color" id="grc1" value="#6c5ce7"><input type="text" class="hex-in" id="grc1h" value="#6c5ce7" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Gradient End</label><div class="cpw"><input type="color" id="grc2" value="#00b894"><input type="text" class="hex-in" id="grc2h" value="#00b894" maxlength="7" spellcheck="false"></div></div></div>
+                <div class="fg" style="margin-top:10px"><label>Background</label><div class="cpw"><input type="color" id="gbg" value="#ffffff"><input type="text" class="hex-in" id="gbgh" value="#ffffff" maxlength="7" spellcheck="false"></div></div>
+                <div class="fg" style="margin-top:10px"><label>Direction</label>
+                    <div class="sg grad-dir-sg" id="grad-dir">
+                        <div class="so on" data-dir="vertical" title="Top to Bottom"><i class="fas fa-arrow-down"></i></div>
+                        <div class="so" data-dir="horizontal" title="Left to Right"><i class="fas fa-arrow-right"></i></div>
+                        <div class="so" data-dir="diagonal" title="Diagonal"><i class="fas fa-arrow-down" style="transform:rotate(-45deg)"></i></div>
+                        <div class="so" data-dir="radial" title="Radial"><i class="fas fa-circle"></i></div>
+                    </div>
+                </div>
+            </div>
             <div class="cr" style="margin-top:12px"><div class="fg"><label>Corner Square <span class="hn">(opt.)</span></label><div class="cpw"><input type="color" id="cc" value="#000000"><input type="text" class="hex-in" id="cch" value="#000000" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Corner Dot <span class="hn">(opt.)</span></label><div class="cpw"><input type="color" id="ccd" value="#000000"><input type="text" class="hex-in" id="ccdh" value="#000000" maxlength="7" spellcheck="false"></div></div></div>
+            <div class="sd"></div>
+            <div class="st"><i class="fas fa-shapes"></i> QR Shape Mask</div>
+            <div class="sg shape-sg" id="shape-sg">
+                <div class="so on" data-shape="none">None</div>
+                <div class="so" data-shape="circle">Circle</div>
+                <div class="so" data-shape="rounded">Rounded</div>
+                <div class="so" data-shape="heart">Heart</div>
+                <div class="so" data-shape="diamond">Diamond</div>
+                <div class="so" data-shape="shield">Shield</div>
+                <div class="so" data-shape="hexagon">Hexagon</div>
+                <div class="so" data-shape="star">Star</div>
+            </div>
+            <div class="fg" id="shape-pad-wrap" style="display:none;margin-top:10px"><label>Shape Padding: <strong id="shape-pad-val">20</strong>px</label><input type="range" id="shape-pad" min="0" max="60" value="20" step="2"><div class="rl"><span>0</span><span>60</span></div></div>
+            <div class="sd"></div>
+            <div class="st"><i class="fas fa-th"></i> Background Pattern</div>
+            <div class="sg" id="bgpat-sg">
+                <div class="so on" data-pat="none">None</div>
+                <div class="so" data-pat="dots">Dots</div>
+                <div class="so" data-pat="grid">Grid</div>
+                <div class="so" data-pat="noise">Noise</div>
+            </div>
+            <div id="bgpat-opts" style="display:none">
+                <div class="cr" style="margin-top:8px">
+                    <div class="fg"><label>Pattern Color</label><div class="cpw"><input type="color" id="bgpat-col" value="#e0e0e0"><input type="text" class="hex-in" id="bgpat-colh" value="#e0e0e0" maxlength="7" spellcheck="false"></div></div>
+                    <div class="fg"><label>Opacity: <strong id="bgpat-op-val">0.3</strong></label><input type="range" id="bgpat-op" min="0.05" max="1" value="0.3" step="0.05"></div>
+                </div>
+            </div>
+            <div class="sd"></div>
+            <div class="st"><i class="fas fa-border-style"></i> Frame / Border</div>
+            <div class="sg" id="frame-sg">
+                <div class="so on" data-frame="none">None</div>
+                <div class="so" data-frame="simple">Simple</div>
+                <div class="so" data-frame="rounded">Rounded</div>
+                <div class="so" data-frame="badge">Badge</div>
+                <div class="so" data-frame="ticket">Ticket</div>
+            </div>
+            <div id="frame-opts" style="display:none">
+                <div class="cr" style="margin-top:8px">
+                    <div class="fg"><label>Frame Color</label><div class="cpw"><input type="color" id="frame-col" value="#000000"><input type="text" class="hex-in" id="frame-colh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+                    <div class="fg"><label>Thickness: <strong id="frame-w-val">3</strong>px</label><input type="range" id="frame-w" min="1" max="12" value="3" step="1"></div>
+                </div>
+            </div>
+            <div class="sd"></div>
+            <div class="st"><i class="fas fa-text-height"></i> Text Label</div>
+            <div class="tr"><span>Show Label</span><div class="tg" id="show-label" data-active="false"></div></div>
+            <div id="label-opts" style="display:none">
+                <div class="fg" style="margin-top:8px"><label>Text</label><input type="text" id="label-text" placeholder="Scan me!" value="Scan me!"></div>
+                <div class="cr" style="margin-top:8px">
+                    <div class="fg"><label>Position</label><div class="sg label-pos-sg" id="label-pos"><div class="so" data-pos="above">Above</div><div class="so on" data-pos="below">Below</div></div></div>
+                    <div class="fg"><label>Font Size: <strong id="label-fs-val">16</strong>px</label><input type="range" id="label-fs" min="10" max="40" value="16" step="1"></div>
+                </div>
+                <div class="cr" style="margin-top:8px">
+                    <div class="fg"><label>Text Color</label><div class="cpw"><input type="color" id="label-col" value="#000000"><input type="text" class="hex-in" id="label-colh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+                    <div class="fg"><label>Font</label><select id="label-font"><option value="DM Sans">DM Sans</option><option value="Playfair Display">Playfair Display</option><option value="JetBrains Mono">JetBrains Mono</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Courier New">Courier New</option></select></div>
+                </div>
+            </div>
+            <div class="sd"></div>
+            <div class="tr"><span><i class="fas fa-eye-slash" style="margin-right:4px"></i> Transparent Background</span><div class="tg" id="trans-bg" data-active="false"></div></div>
             <div class="sd"></div>
             <div class="st"><i class="fas fa-shield-alt"></i> Error Correction</div>
             <div class="eco" id="eco"><div class="ec" data-ec="L">L<small>7%</small></div><div class="ec on" data-ec="M">M<small>15%</small></div><div class="ec" data-ec="Q">Q<small>25%</small></div><div class="ec" data-ec="H">H<small>30%</small></div></div>
@@ -167,6 +241,16 @@
                 <div class="ua pdf-bg-upload" id="pdfua"><i class="fas fa-image"></i><span id="pdful">Upload A4 background (PNG, JPG, SVG)</span><input type="file" id="pdfui" accept="image/png,image/jpeg,image/svg+xml" hidden></div>
                 <button class="pdf-bg-clear" id="pdfuc" style="display:none"><i class="fas fa-times"></i></button>
             </div>
+            <div class="sd"></div>
+            <div class="st"><i class="fas fa-swatchbook"></i> Style Presets</div>
+            <div class="preset-row">
+                <button class="db preset-btn" id="preset-save"><i class="fas fa-save"></i> Save Preset</button>
+                <button class="db preset-btn" id="preset-load"><i class="fas fa-folder-open"></i> Load Preset</button>
+                <input type="file" id="preset-file" accept=".json" hidden>
+            </div>
+            <div id="preset-list-wrap">
+                <div class="preset-list" id="preset-list"></div>
+            </div>
         </div>
     </div>
     <div class="panel pp">
@@ -224,8 +308,49 @@
         </div>
     </div>
 </div>
+<div class="app bulk-app" id="app-bulk" style="display:none">
+    <div class="panel bulk-input-panel">
+        <div class="ph"><i class="fas fa-database"></i> Bulk Data Input</div>
+        <div class="pb">
+            <div class="fg"><label>Data <span class="hn">(one QR code per line)</span></label>
+                <textarea id="bulk-text" rows="8" placeholder="https://example.com&#10;https://another.com&#10;WIFI:T:WPA;S:MyNet;P:pass123;;&#10;tel:+1234567890"></textarea>
+            </div>
+            <div class="bulk-or"><span>or</span></div>
+            <div class="ua bulk-csv-upload" id="bulk-csv-ua">
+                <i class="fas fa-file-csv"></i>
+                <span id="bulk-csv-label">Upload CSV file</span>
+                <input type="file" id="bulk-csv-input" accept=".csv,.tsv,.txt" hidden>
+            </div>
+            <div id="bulk-csv-config" style="display:none">
+                <div class="cr" style="margin-top:10px">
+                    <div class="fg"><label>Data Column</label><select id="bulk-csv-col"></select></div>
+                    <div class="fg"><label>Detected Rows: <strong id="bulk-csv-count">0</strong></label></div>
+                </div>
+            </div>
+            <div class="sd"></div>
+            <p style="font-size:11px;color:var(--t3)"><i class="fas fa-info-circle"></i> Style settings from the Create tab will be applied to all generated QR codes.</p>
+            <div class="bulk-actions">
+                <button class="db bulk-gen-btn" id="bulk-gen"><i class="fas fa-qrcode"></i> Generate All</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel bulk-preview-panel">
+        <div class="ph"><i class="fas fa-th"></i> Preview <span class="hn" id="bulk-count-label"></span></div>
+        <div class="pb">
+            <div class="bulk-grid" id="bulk-grid">
+                <div class="bulk-placeholder"><i class="fas fa-arrow-left" style="font-size:24px;color:var(--t3)"></i><p style="color:var(--t3)">Enter data and click Generate</p></div>
+            </div>
+            <div class="bulk-export" id="bulk-export" style="display:none">
+                <button class="db" id="bulk-zip-png"><i class="fas fa-file-archive"></i> ZIP (PNG)</button>
+                <button class="db" id="bulk-zip-svg"><i class="fas fa-file-archive"></i> ZIP (SVG)</button>
+                <button class="db" id="bulk-pdf"><i class="fas fa-file-pdf"></i> Multi-page PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="tm">Downloaded!</span></div>
 <footer id="ft"></footer>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
 <script src="app.js"></script>
