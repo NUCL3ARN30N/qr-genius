@@ -26,12 +26,19 @@
     box-sizing:border-box;
 }
 
+html {
+    touch-action:manipulation;
+    -ms-touch-action:manipulation;
+}
+
 body {
     font-family:'DM Sans',sans-serif;
     background:var(--bg);
     color:var(--t1);
     min-height:100vh;
     overflow-x:hidden;
+    touch-action:manipulation;
+    -webkit-text-size-adjust:100%;
 }
 
 .ambg {
