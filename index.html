@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>QR Genius</title>
     <meta name="description" content="Create stunning QR codes with custom styles, embedded icons, and multiple data types.">
     <link rel="canonical" href="https://qr.genius-space.org">
@@ -72,205 +73,208 @@
             <div class="tc" id="tab-vcard"><div class="vf"><div class="cr"><div class="fg"><label>First Name</label><input type="text" id="input-vcard-fn" placeholder="John"></div><div class="fg"><label>Last Name</label><input type="text" id="input-vcard-ln" placeholder="Doe"></div></div><div class="fg"><label>Organization <span class="hn">(optional)</span></label><input type="text" id="input-vcard-org" placeholder="Company Inc."></div><div class="fg"><label>Phone</label><input type="tel" id="input-vcard-phone" placeholder="+1234567890"></div><div class="fg"><label>Email</label><input type="email" id="input-vcard-email" placeholder="john@example.com"></div><div class="fg"><label>Website <span class="hn">(optional)</span></label><input type="url" id="input-vcard-url" placeholder="https://example.com"></div></div></div>
             <div class="tc" id="tab-event"><div class="ef"><div class="fg"><label>Event Title</label><input type="text" id="input-event-title" placeholder="Meeting"></div><div class="fg"><label>Location <span class="hn">(optional)</span></label><input type="text" id="input-event-location" placeholder="123 Main St"></div><div class="fg"><label>Start Date &amp; Time</label><input type="datetime-local" id="input-event-start"></div><div class="fg"><label>End Date &amp; Time</label><input type="datetime-local" id="input-event-end"></div><div class="fg"><label>Description <span class="hn">(optional)</span></label><textarea id="input-event-desc" placeholder="Event details..."></textarea></div></div></div>
 
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-palette"></i> Dot Style</div>
-            <div class="sg" id="dsg">
-                <div class="so on" data-style="square"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Square</div>
-                <div class="so" data-style="dots"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Dots</div>
-                <div class="so" data-style="rounded"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Rounded</div>
-                <div class="so" data-style="classy"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Classy</div>
-                <div class="so" data-style="classy-rounded"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Classy Round</div>
-                <div class="so" data-style="extra-rounded"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Extra Round</div>
-            </div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-vector-square"></i> Corner Square Style</div>
-            <div class="sg" id="csg"><div class="so on" data-style="square">Square</div><div class="so" data-style="dot">Dot</div><div class="so" data-style="extra-rounded">Rounded</div></div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-circle"></i> Corner Dot Style</div>
-            <div class="sg" id="cdsg"><div class="so on" data-style="square">Square</div><div class="so" data-style="dot">Dot</div></div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-tint"></i> Colors</div>
-            <div class="tr"><span>Use Gradient</span><div class="tg" id="use-grad" data-active="false"></div></div>
-            <div id="color-solid">
-                <div class="cr"><div class="fg"><label>Foreground</label><div class="cpw"><input type="color" id="cfg" value="#000000"><input type="text" class="hex-in" id="cfgh" value="#000000" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Background</label><div class="cpw"><input type="color" id="cbg" value="#ffffff"><input type="text" class="hex-in" id="cbgh" value="#ffffff" maxlength="7" spellcheck="false"></div></div></div>
-            </div>
-            <div id="color-grad" style="display:none">
-                <div class="cr"><div class="fg"><label>Gradient Start</label><div class="cpw"><input type="color" id="grc1" value="#6c5ce7"><input type="text" class="hex-in" id="grc1h" value="#6c5ce7" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Gradient End</label><div class="cpw"><input type="color" id="grc2" value="#00b894"><input type="text" class="hex-in" id="grc2h" value="#00b894" maxlength="7" spellcheck="false"></div></div></div>
-                <div class="fg" style="margin-top:10px"><label>Background</label><div class="cpw"><input type="color" id="gbg" value="#ffffff"><input type="text" class="hex-in" id="gbgh" value="#ffffff" maxlength="7" spellcheck="false"></div></div>
-                <div class="fg" style="margin-top:10px"><label>Direction</label>
-                    <div class="sg grad-dir-sg" id="grad-dir">
-                        <div class="so on" data-dir="vertical" title="Top to Bottom"><i class="fas fa-arrow-down"></i></div>
-                        <div class="so" data-dir="horizontal" title="Left to Right"><i class="fas fa-arrow-right"></i></div>
-                        <div class="so" data-dir="diagonal" title="Diagonal"><i class="fas fa-arrow-down" style="transform:rotate(-45deg)"></i></div>
-                        <div class="so" data-dir="radial" title="Radial"><i class="fas fa-circle"></i></div>
-                    </div>
+```
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-palette"></i> Dot Style</div>
+        <div class="sg" id="dsg">
+            <div class="so on" data-style="square"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Square</div>
+            <div class="so" data-style="dots"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Dots</div>
+            <div class="so" data-style="rounded"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Rounded</div>
+            <div class="so" data-style="classy"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Classy</div>
+            <div class="so" data-style="classy-rounded"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Classy Round</div>
+            <div class="so" data-style="extra-rounded"><div class="sp"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>Extra Round</div>
+        </div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-vector-square"></i> Corner Square Style</div>
+        <div class="sg" id="csg"><div class="so on" data-style="square">Square</div><div class="so" data-style="dot">Dot</div><div class="so" data-style="extra-rounded">Rounded</div></div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-circle"></i> Corner Dot Style</div>
+        <div class="sg" id="cdsg"><div class="so on" data-style="square">Square</div><div class="so" data-style="dot">Dot</div></div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-tint"></i> Colors</div>
+        <div class="tr"><span>Use Gradient</span><div class="tg" id="use-grad" data-active="false"></div></div>
+        <div id="color-solid">
+            <div class="cr"><div class="fg"><label>Foreground</label><div class="cpw"><input type="color" id="cfg" value="#000000"><input type="text" class="hex-in" id="cfgh" value="#000000" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Background</label><div class="cpw"><input type="color" id="cbg" value="#ffffff"><input type="text" class="hex-in" id="cbgh" value="#ffffff" maxlength="7" spellcheck="false"></div></div></div>
+        </div>
+        <div id="color-grad" style="display:none">
+            <div class="cr"><div class="fg"><label>Gradient Start</label><div class="cpw"><input type="color" id="grc1" value="#6c5ce7"><input type="text" class="hex-in" id="grc1h" value="#6c5ce7" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Gradient End</label><div class="cpw"><input type="color" id="grc2" value="#00b894"><input type="text" class="hex-in" id="grc2h" value="#00b894" maxlength="7" spellcheck="false"></div></div></div>
+            <div class="fg" style="margin-top:10px"><label>Background</label><div class="cpw"><input type="color" id="gbg" value="#ffffff"><input type="text" class="hex-in" id="gbgh" value="#ffffff" maxlength="7" spellcheck="false"></div></div>
+            <div class="fg" style="margin-top:10px"><label>Direction</label>
+                <div class="sg grad-dir-sg" id="grad-dir">
+                    <div class="so on" data-dir="vertical" title="Top to Bottom"><i class="fas fa-arrow-down"></i></div>
+                    <div class="so" data-dir="horizontal" title="Left to Right"><i class="fas fa-arrow-right"></i></div>
+                    <div class="so" data-dir="diagonal" title="Diagonal"><i class="fas fa-arrow-down" style="transform:rotate(-45deg)"></i></div>
+                    <div class="so" data-dir="radial" title="Radial"><i class="fas fa-circle"></i></div>
                 </div>
-            </div>
-            <div class="cr" style="margin-top:12px"><div class="fg"><label>Corner Square <span class="hn">(opt.)</span></label><div class="cpw"><input type="color" id="cc" value="#000000"><input type="text" class="hex-in" id="cch" value="#000000" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Corner Dot <span class="hn">(opt.)</span></label><div class="cpw"><input type="color" id="ccd" value="#000000"><input type="text" class="hex-in" id="ccdh" value="#000000" maxlength="7" spellcheck="false"></div></div></div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-shapes"></i> QR Shape Mask</div>
-            <div class="sg shape-sg" id="shape-sg">
-                <div class="so on" data-shape="none">None</div>
-                <div class="so" data-shape="circle">Circle</div>
-                <div class="so" data-shape="rounded">Rounded</div>
-                <div class="so" data-shape="heart">Heart</div>
-                <div class="so" data-shape="diamond">Diamond</div>
-                <div class="so" data-shape="shield">Shield</div>
-                <div class="so" data-shape="hexagon">Hexagon</div>
-                <div class="so" data-shape="star">Star</div>
-            </div>
-            <div class="fg" id="shape-pad-wrap" style="display:none;margin-top:10px"><label>Shape Padding: <strong id="shape-pad-val">20</strong>px</label><input type="range" id="shape-pad" min="0" max="60" value="20" step="2"><div class="rl"><span>0</span><span>60</span></div></div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-th"></i> Background Pattern</div>
-            <div class="sg" id="bgpat-sg">
-                <div class="so on" data-pat="none">None</div>
-                <div class="so" data-pat="dots">Dots</div>
-                <div class="so" data-pat="grid">Grid</div>
-                <div class="so" data-pat="noise">Noise</div>
-            </div>
-            <div id="bgpat-opts" style="display:none">
-                <div class="cr" style="margin-top:8px">
-                    <div class="fg"><label>Pattern Color</label><div class="cpw"><input type="color" id="bgpat-col" value="#e0e0e0"><input type="text" class="hex-in" id="bgpat-colh" value="#e0e0e0" maxlength="7" spellcheck="false"></div></div>
-                    <div class="fg"><label>Opacity: <strong id="bgpat-op-val">0.3</strong></label><input type="range" id="bgpat-op" min="0.05" max="1" value="0.3" step="0.05"></div>
-                </div>
-            </div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-border-style"></i> Frame / Border</div>
-            <div class="sg" id="frame-sg">
-                <div class="so on" data-frame="none">None</div>
-                <div class="so" data-frame="simple">Simple</div>
-                <div class="so" data-frame="rounded">Rounded</div>
-                <div class="so" data-frame="badge">Badge</div>
-                <div class="so" data-frame="ticket">Ticket</div>
-            </div>
-            <div id="frame-opts" style="display:none">
-                <div class="cr" style="margin-top:8px">
-                    <div class="fg"><label>Frame Color</label><div class="cpw"><input type="color" id="frame-col" value="#000000"><input type="text" class="hex-in" id="frame-colh" value="#000000" maxlength="7" spellcheck="false"></div></div>
-                    <div class="fg"><label>Thickness: <strong id="frame-w-val">3</strong>px</label><input type="range" id="frame-w" min="1" max="12" value="3" step="1"></div>
-                </div>
-            </div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-text-height"></i> Text Label</div>
-            <div class="tr"><span>Show Label</span><div class="tg" id="show-label" data-active="false"></div></div>
-            <div id="label-opts" style="display:none">
-                <div class="fg" style="margin-top:8px"><label>Text</label><input type="text" id="label-text" placeholder="Scan me!" value="Scan me!"></div>
-                <div class="cr" style="margin-top:8px">
-                    <div class="fg"><label>Position</label><div class="sg label-pos-sg" id="label-pos"><div class="so" data-pos="above">Above</div><div class="so on" data-pos="below">Below</div></div></div>
-                    <div class="fg"><label>Font Size: <strong id="label-fs-val">16</strong>px</label><input type="range" id="label-fs" min="10" max="40" value="16" step="1"></div>
-                </div>
-                <div class="cr" style="margin-top:8px">
-                    <div class="fg"><label>Text Color</label><div class="cpw"><input type="color" id="label-col" value="#000000"><input type="text" class="hex-in" id="label-colh" value="#000000" maxlength="7" spellcheck="false"></div></div>
-                    <div class="fg"><label>Font</label><select id="label-font"><option value="DM Sans">DM Sans</option><option value="Playfair Display">Playfair Display</option><option value="JetBrains Mono">JetBrains Mono</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Courier New">Courier New</option></select></div>
-                </div>
-            </div>
-            <div class="sd"></div>
-            <div class="tr"><span><i class="fas fa-eye-slash" style="margin-right:4px"></i> Transparent Background</span><div class="tg" id="trans-bg" data-active="false"></div></div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-shield-alt"></i> Error Correction</div>
-            <div class="eco" id="eco"><div class="ec" data-ec="L">L<small>7%</small></div><div class="ec on" data-ec="M">M<small>15%</small></div><div class="ec" data-ec="Q">Q<small>25%</small></div><div class="ec" data-ec="H">H<small>30%</small></div></div>
-            <p style="font-size:11px;color:var(--t3);margin-top:6px">Use Q or H when adding a center icon.</p>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-expand-arrows-alt"></i> Size</div>
-            <div class="fg"><label>QR Size: <strong id="sl">300px</strong></label><input type="range" id="qs" min="150" max="1000" value="300" step="10"><div class="rl"><span>150px</span><span>1000px</span></div></div>
-            <div class="fg" style="margin-top:12px"><label>Margin: <strong id="ml">10</strong></label><input type="range" id="qm" min="0" max="50" value="10" step="1"><div class="rl"><span>0</span><span>50</span></div></div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-image"></i> Center Icon / Image</div>
-            <div class="icon-src-tabs" id="isrc-tabs">
-                <button class="icon-src-tab on" data-src="presets">Presets</button>
-                <button class="icon-src-tab" data-src="fontawesome">FA</button>
-                <button class="icon-src-tab" data-src="remix">Remix</button>
-                <button class="icon-src-tab" data-src="nerd">Nerd</button>
-                <button class="icon-src-tab" data-src="simple">Simple</button>
-                <button class="icon-src-tab" data-src="upload">Upload</button>
-            </div>
-
-            <div class="icon-src-content on" id="isrc-presets">
-                <div class="ig" id="icg">
-                    <div class="io on" data-icon="none" title="None"><i class="fas fa-ban"></i></div>
-                    <div class="io" data-icon="globe"><i class="fas fa-globe"></i></div>
-                    <div class="io" data-icon="heart"><i class="fas fa-heart"></i></div>
-                    <div class="io" data-icon="star"><i class="fas fa-star"></i></div>
-                    <div class="io" data-icon="home"><i class="fas fa-home"></i></div>
-                    <div class="io" data-icon="shopping"><i class="fas fa-shopping-cart"></i></div>
-                    <div class="io" data-icon="music"><i class="fas fa-music"></i></div>
-                    <div class="io" data-icon="camera"><i class="fas fa-camera"></i></div>
-                    <div class="io" data-icon="wifi"><i class="fas fa-wifi"></i></div>
-                    <div class="io" data-icon="lock"><i class="fas fa-lock"></i></div>
-                    <div class="io" data-icon="envelope"><i class="fas fa-envelope"></i></div>
-                    <div class="io" data-icon="phone"><i class="fas fa-phone-alt"></i></div>
-                    <div class="io" data-icon="map"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="io" data-icon="code"><i class="fas fa-code"></i></div>
-                    <div class="io" data-icon="bolt"><i class="fas fa-bolt"></i></div>
-                </div>
-            </div>
-
-            <div class="icon-src-content" id="isrc-fontawesome">
-                <div class="cust-icon-row">
-                    <div class="cust-icon-input"><div class="fg"><label>FontAwesome Icon Class</label><input type="text" id="fa-class" placeholder="fa-solid fa-rocket" spellcheck="false"></div></div>
-                    <div class="cust-icon-preview" id="fa-prev"><i class="fas fa-icons"></i></div>
-                </div>
-                <div class="icon-src-hint">Browse icons at <a href="https://fontawesome.com/icons" target="_blank">fontawesome.com</a><br>Format: <code>fa-solid fa-name</code> or <code>fa-brands fa-name</code></div>
-                <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="fa-color" value="#000000"><input type="text" class="hex-in" id="fa-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
-            </div>
-
-            <div class="icon-src-content" id="isrc-remix">
-                <div class="cust-icon-row">
-                    <div class="cust-icon-input"><div class="fg"><label>Remix Icon Class</label><input type="text" id="ri-class" placeholder="ri-rocket-line" spellcheck="false"></div></div>
-                    <div class="cust-icon-preview" id="ri-prev"><i class="ri-apps-line"></i></div>
-                </div>
-                <div class="icon-src-hint">Browse icons at <a href="https://remixicon.com" target="_blank">remixicon.com</a> (v4.6)<br>Format: <code>ri-icon-name</code> (e.g. <code>ri-wifi-line</code>)</div>
-                <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="ri-color" value="#000000"><input type="text" class="hex-in" id="ri-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
-            </div>
-
-            <div class="icon-src-content" id="isrc-nerd">
-                <div class="cust-icon-row">
-                    <div class="cust-icon-input"><div class="fg"><label>Nerd Font Icon Class</label><input type="text" id="nf-class" placeholder="nf-fa-linux" spellcheck="false"></div></div>
-                    <div class="cust-icon-preview" id="nf-prev"><i class="nf nf-fa-terminal"></i></div>
-                </div>
-                <div class="icon-src-hint">Browse icons at <a href="https://www.nerdfonts.com/cheat-sheet" target="_blank">nerdfonts.com/cheat-sheet</a><br>Format: <code>nf-setname-iconname</code> (e.g. <code>nf-fa-linux</code>)</div>
-                <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="nf-color" value="#000000"><input type="text" class="hex-in" id="nf-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
-            </div>
-
-            <div class="icon-src-content" id="isrc-simple">
-                <div class="cust-icon-row">
-                    <div class="cust-icon-input"><div class="fg"><label>Simple Icons Slug</label><input type="text" id="si-class" placeholder="github" spellcheck="false"></div></div>
-                    <div class="cust-icon-preview" id="si-prev"><i class="fas fa-cube"></i></div>
-                </div>
-                <div class="icon-src-hint">Browse icons at <a href="https://icones.js.org/collection/simple-icons" target="_blank">icones.js.org</a> or <a href="https://simpleicons.org" target="_blank">simpleicons.org</a><br>Format: slug name (e.g. <code>github</code>, <code>discord</code>, <code>python</code>)</div>
-            </div>
-
-            <div class="icon-src-content" id="isrc-upload">
-                <div class="ua" id="ua"><i class="fas fa-cloud-upload-alt"></i><span id="ul">Click or drag to upload (PNG, JPG, SVG)</span><input type="file" id="ui" accept="image/*" hidden></div>
-            </div>
-            <div class="fg"><label>Icon Size: <strong id="isl">0.4</strong></label><input type="range" id="is" min="0.1" max="1.0" value="0.4" step="0.05"><div class="rl"><span>Small</span><span>Large</span></div></div>
-            <div class="tr"><span>Hide dots behind icon</span><div class="tg on" id="ihd" data-active="true"></div></div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-file-pdf"></i> PDF Export Background <span class="hn">(optional)</span></div>
-            <div class="pdf-bg-row">
-                <div class="ua pdf-bg-upload" id="pdfua"><i class="fas fa-image"></i><span id="pdful">Upload A4 background (PNG, JPG, SVG)</span><input type="file" id="pdfui" accept="image/png,image/jpeg,image/svg+xml" hidden></div>
-                <button class="pdf-bg-clear" id="pdfuc" style="display:none"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="sd"></div>
-            <div class="st"><i class="fas fa-swatchbook"></i> Style Presets</div>
-            <div class="preset-row">
-                <button class="db preset-btn" id="preset-save"><i class="fas fa-save"></i> Save Preset</button>
-                <button class="db preset-btn" id="preset-load"><i class="fas fa-folder-open"></i> Load Preset</button>
-                <input type="file" id="preset-file" accept=".json" hidden>
-            </div>
-            <div id="preset-list-wrap">
-                <div class="preset-list" id="preset-list"></div>
             </div>
         </div>
-    </div>
-    <div class="panel pp">
-        <div class="ph"><i class="fas fa-eye"></i> Live Preview<div class="li"><div class="ld"></div> Auto-updating</div></div>
-        <div class="ppa">
-            <div class="qcw" id="qcw"><div id="qo"><div class="qph"><i class="fas fa-qrcode"></i><p>Your QR code will<br>appear here</p></div></div></div>
-            <div class="dr"><button class="db" id="dp" disabled><i class="fas fa-file-image"></i> PNG</button><button class="db" id="ds" disabled><i class="fas fa-file-code"></i> SVG</button><button class="db" id="dpdf" disabled><i class="fas fa-file-pdf"></i> PDF</button></div>
-            <div class="ur-row"><button class="ur-btn" id="ubtn" disabled><i class="fas fa-undo"></i> Undo</button><button class="ur-btn" id="rbtn" disabled><i class="fas fa-redo"></i> Redo</button></div>
-            <div class="qi" id="qi" style="display:none">Encoded: <code id="qd"></code></div>
+        <div class="cr" style="margin-top:12px"><div class="fg"><label>Corner Square <span class="hn">(opt.)</span></label><div class="cpw"><input type="color" id="cc" value="#000000"><input type="text" class="hex-in" id="cch" value="#000000" maxlength="7" spellcheck="false"></div></div><div class="fg"><label>Corner Dot <span class="hn">(opt.)</span></label><div class="cpw"><input type="color" id="ccd" value="#000000"><input type="text" class="hex-in" id="ccdh" value="#000000" maxlength="7" spellcheck="false"></div></div></div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-shapes"></i> QR Shape Mask</div>
+        <div class="sg shape-sg" id="shape-sg">
+            <div class="so on" data-shape="none">None</div>
+            <div class="so" data-shape="circle">Circle</div>
+            <div class="so" data-shape="rounded">Rounded</div>
+            <div class="so" data-shape="heart">Heart</div>
+            <div class="so" data-shape="diamond">Diamond</div>
+            <div class="so" data-shape="shield">Shield</div>
+            <div class="so" data-shape="hexagon">Hexagon</div>
+            <div class="so" data-shape="star">Star</div>
+        </div>
+        <div class="fg" id="shape-pad-wrap" style="display:none;margin-top:10px"><label>Shape Padding: <strong id="shape-pad-val">20</strong>px</label><input type="range" id="shape-pad" min="0" max="60" value="20" step="2"><div class="rl"><span>0</span><span>60</span></div></div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-th"></i> Background Pattern</div>
+        <div class="sg" id="bgpat-sg">
+            <div class="so on" data-pat="none">None</div>
+            <div class="so" data-pat="dots">Dots</div>
+            <div class="so" data-pat="grid">Grid</div>
+            <div class="so" data-pat="noise">Noise</div>
+        </div>
+        <div id="bgpat-opts" style="display:none">
+            <div class="cr" style="margin-top:8px">
+                <div class="fg"><label>Pattern Color</label><div class="cpw"><input type="color" id="bgpat-col" value="#e0e0e0"><input type="text" class="hex-in" id="bgpat-colh" value="#e0e0e0" maxlength="7" spellcheck="false"></div></div>
+                <div class="fg"><label>Opacity: <strong id="bgpat-op-val">0.3</strong></label><input type="range" id="bgpat-op" min="0.05" max="1" value="0.3" step="0.05"></div>
+            </div>
+        </div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-border-style"></i> Frame / Border</div>
+        <div class="sg" id="frame-sg">
+            <div class="so on" data-frame="none">None</div>
+            <div class="so" data-frame="simple">Simple</div>
+            <div class="so" data-frame="rounded">Rounded</div>
+            <div class="so" data-frame="badge">Badge</div>
+            <div class="so" data-frame="ticket">Ticket</div>
+        </div>
+        <div id="frame-opts" style="display:none">
+            <div class="cr" style="margin-top:8px">
+                <div class="fg"><label>Frame Color</label><div class="cpw"><input type="color" id="frame-col" value="#000000"><input type="text" class="hex-in" id="frame-colh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+                <div class="fg"><label>Thickness: <strong id="frame-w-val">3</strong>px</label><input type="range" id="frame-w" min="1" max="12" value="3" step="1"></div>
+            </div>
+        </div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-text-height"></i> Text Label</div>
+        <div class="tr"><span>Show Label</span><div class="tg" id="show-label" data-active="false"></div></div>
+        <div id="label-opts" style="display:none">
+            <div class="fg" style="margin-top:8px"><label>Text</label><input type="text" id="label-text" placeholder="Scan me!" value="Scan me!"></div>
+            <div class="cr" style="margin-top:8px">
+                <div class="fg"><label>Position</label><div class="sg label-pos-sg" id="label-pos"><div class="so" data-pos="above">Above</div><div class="so on" data-pos="below">Below</div></div></div>
+                <div class="fg"><label>Font Size: <strong id="label-fs-val">16</strong>px</label><input type="range" id="label-fs" min="10" max="40" value="16" step="1"></div>
+            </div>
+            <div class="cr" style="margin-top:8px">
+                <div class="fg"><label>Text Color</label><div class="cpw"><input type="color" id="label-col" value="#000000"><input type="text" class="hex-in" id="label-colh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+                <div class="fg"><label>Font</label><select id="label-font"><option value="DM Sans">DM Sans</option><option value="Playfair Display">Playfair Display</option><option value="JetBrains Mono">JetBrains Mono</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Courier New">Courier New</option></select></div>
+            </div>
+        </div>
+        <div class="sd"></div>
+        <div class="tr"><span><i class="fas fa-eye-slash" style="margin-right:4px"></i> Transparent Background</span><div class="tg" id="trans-bg" data-active="false"></div></div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-shield-alt"></i> Error Correction</div>
+        <div class="eco" id="eco"><div class="ec" data-ec="L">L<small>7%</small></div><div class="ec on" data-ec="M">M<small>15%</small></div><div class="ec" data-ec="Q">Q<small>25%</small></div><div class="ec" data-ec="H">H<small>30%</small></div></div>
+        <p style="font-size:11px;color:var(--t3);margin-top:6px">Use Q or H when adding a center icon.</p>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-expand-arrows-alt"></i> Size</div>
+        <div class="fg"><label>QR Size: <strong id="sl">300px</strong></label><input type="range" id="qs" min="150" max="1000" value="300" step="10"><div class="rl"><span>150px</span><span>1000px</span></div></div>
+        <div class="fg" style="margin-top:12px"><label>Margin: <strong id="ml">10</strong></label><input type="range" id="qm" min="0" max="50" value="10" step="1"><div class="rl"><span>0</span><span>50</span></div></div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-image"></i> Center Icon / Image</div>
+        <div class="icon-src-tabs" id="isrc-tabs">
+            <button class="icon-src-tab on" data-src="presets">Presets</button>
+            <button class="icon-src-tab" data-src="fontawesome">FA</button>
+            <button class="icon-src-tab" data-src="remix">Remix</button>
+            <button class="icon-src-tab" data-src="nerd">Nerd</button>
+            <button class="icon-src-tab" data-src="simple">Simple</button>
+            <button class="icon-src-tab" data-src="upload">Upload</button>
+        </div>
+
+        <div class="icon-src-content on" id="isrc-presets">
+            <div class="ig" id="icg">
+                <div class="io on" data-icon="none" title="None"><i class="fas fa-ban"></i></div>
+                <div class="io" data-icon="globe"><i class="fas fa-globe"></i></div>
+                <div class="io" data-icon="heart"><i class="fas fa-heart"></i></div>
+                <div class="io" data-icon="star"><i class="fas fa-star"></i></div>
+                <div class="io" data-icon="home"><i class="fas fa-home"></i></div>
+                <div class="io" data-icon="shopping"><i class="fas fa-shopping-cart"></i></div>
+                <div class="io" data-icon="music"><i class="fas fa-music"></i></div>
+                <div class="io" data-icon="camera"><i class="fas fa-camera"></i></div>
+                <div class="io" data-icon="wifi"><i class="fas fa-wifi"></i></div>
+                <div class="io" data-icon="lock"><i class="fas fa-lock"></i></div>
+                <div class="io" data-icon="envelope"><i class="fas fa-envelope"></i></div>
+                <div class="io" data-icon="phone"><i class="fas fa-phone-alt"></i></div>
+                <div class="io" data-icon="map"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="io" data-icon="code"><i class="fas fa-code"></i></div>
+                <div class="io" data-icon="bolt"><i class="fas fa-bolt"></i></div>
+            </div>
+        </div>
+
+        <div class="icon-src-content" id="isrc-fontawesome">
+            <div class="cust-icon-row">
+                <div class="cust-icon-input"><div class="fg"><label>FontAwesome Icon Class</label><input type="text" id="fa-class" placeholder="fa-solid fa-rocket" spellcheck="false"></div></div>
+                <div class="cust-icon-preview" id="fa-prev"><i class="fas fa-icons"></i></div>
+            </div>
+            <div class="icon-src-hint">Browse icons at <a href="https://fontawesome.com/icons" target="_blank">fontawesome.com</a><br>Format: <code>fa-solid fa-name</code> or <code>fa-brands fa-name</code></div>
+            <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="fa-color" value="#000000"><input type="text" class="hex-in" id="fa-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+        </div>
+
+        <div class="icon-src-content" id="isrc-remix">
+            <div class="cust-icon-row">
+                <div class="cust-icon-input"><div class="fg"><label>Remix Icon Class</label><input type="text" id="ri-class" placeholder="ri-rocket-line" spellcheck="false"></div></div>
+                <div class="cust-icon-preview" id="ri-prev"><i class="ri-apps-line"></i></div>
+            </div>
+            <div class="icon-src-hint">Browse icons at <a href="https://remixicon.com" target="_blank">remixicon.com</a> (v4.6)<br>Format: <code>ri-icon-name</code> (e.g. <code>ri-wifi-line</code>)</div>
+            <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="ri-color" value="#000000"><input type="text" class="hex-in" id="ri-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+        </div>
+
+        <div class="icon-src-content" id="isrc-nerd">
+            <div class="cust-icon-row">
+                <div class="cust-icon-input"><div class="fg"><label>Nerd Font Icon Class</label><input type="text" id="nf-class" placeholder="nf-fa-linux" spellcheck="false"></div></div>
+                <div class="cust-icon-preview" id="nf-prev"><i class="nf nf-fa-terminal"></i></div>
+            </div>
+            <div class="icon-src-hint">Browse icons at <a href="https://www.nerdfonts.com/cheat-sheet" target="_blank">nerdfonts.com/cheat-sheet</a><br>Format: <code>nf-setname-iconname</code> (e.g. <code>nf-fa-linux</code>)</div>
+            <div class="cust-color-row"><label>Icon color</label><div class="cpw"><input type="color" id="nf-color" value="#000000"><input type="text" class="hex-in" id="nf-colorh" value="#000000" maxlength="7" spellcheck="false"></div></div>
+        </div>
+
+        <div class="icon-src-content" id="isrc-simple">
+            <div class="cust-icon-row">
+                <div class="cust-icon-input"><div class="fg"><label>Simple Icons Slug</label><input type="text" id="si-class" placeholder="github" spellcheck="false"></div></div>
+                <div class="cust-icon-preview" id="si-prev"><i class="fas fa-cube"></i></div>
+            </div>
+            <div class="icon-src-hint">Browse icons at <a href="https://icones.js.org/collection/simple-icons" target="_blank">icones.js.org</a> or <a href="https://simpleicons.org" target="_blank">simpleicons.org</a><br>Format: slug name (e.g. <code>github</code>, <code>discord</code>, <code>python</code>)</div>
+        </div>
+
+        <div class="icon-src-content" id="isrc-upload">
+            <div class="ua" id="ua"><i class="fas fa-cloud-upload-alt"></i><span id="ul">Click or drag to upload (PNG, JPG, SVG)</span><input type="file" id="ui" accept="image/*" hidden></div>
+        </div>
+        <div class="fg"><label>Icon Size: <strong id="isl">0.4</strong></label><input type="range" id="is" min="0.1" max="1.0" value="0.4" step="0.05"><div class="rl"><span>Small</span><span>Large</span></div></div>
+        <div class="tr"><span>Hide dots behind icon</span><div class="tg on" id="ihd" data-active="true"></div></div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-file-pdf"></i> PDF Export Background <span class="hn">(optional)</span></div>
+        <div class="pdf-bg-row">
+            <div class="ua pdf-bg-upload" id="pdfua"><i class="fas fa-image"></i><span id="pdful">Upload A4 background (PNG, JPG, SVG)</span><input type="file" id="pdfui" accept="image/png,image/jpeg,image/svg+xml" hidden></div>
+            <button class="pdf-bg-clear" id="pdfuc" style="display:none"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sd"></div>
+        <div class="st"><i class="fas fa-swatchbook"></i> Style Presets</div>
+        <div class="preset-row">
+            <button class="db preset-btn" id="preset-save"><i class="fas fa-save"></i> Save Preset</button>
+            <button class="db preset-btn" id="preset-load"><i class="fas fa-folder-open"></i> Load Preset</button>
+            <input type="file" id="preset-file" accept=".json" hidden>
+        </div>
+        <div id="preset-list-wrap">
+            <div class="preset-list" id="preset-list"></div>
         </div>
     </div>
+</div>
+<div class="panel pp">
+    <div class="ph"><i class="fas fa-eye"></i> Live Preview<div class="li"><div class="ld"></div> Auto-updating</div></div>
+    <div class="ppa">
+        <div class="qcw" id="qcw"><div id="qo"><div class="qph"><i class="fas fa-qrcode"></i><p>Your QR code will<br>appear here</p></div></div></div>
+        <div class="dr"><button class="db" id="dp" disabled><i class="fas fa-file-image"></i> PNG</button><button class="db" id="ds" disabled><i class="fas fa-file-code"></i> SVG</button><button class="db" id="dpdf" disabled><i class="fas fa-file-pdf"></i> PDF</button></div>
+        <div class="ur-row"><button class="ur-btn" id="ubtn" disabled><i class="fas fa-undo"></i> Undo</button><button class="ur-btn" id="rbtn" disabled><i class="fas fa-redo"></i> Redo</button></div>
+        <div class="qi" id="qi" style="display:none">Encoded: <code id="qd"></code></div>
+    </div>
+</div>
+```
+
 </div>
 <div class="app reader-app" id="app-read" style="display:none">
     <div class="panel reader-panel">
